@@ -1,0 +1,21 @@
+.header {
+  width: 1920px;
+  background-color: #1c1c21;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 340px;
+}
+
+.header__box {
+  display: flex;
+  column-gap: 49px;
+}
+
+.header_color {
+  color: #8585ad;
+}
+
+.header_color_white {
+  color: #f2f2f3;
+}

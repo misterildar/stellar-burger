@@ -1,4 +1,4 @@
-/* @import url(./vendor/normalize.css);
+@import url(./vendor/normalize.css);
 
 @font-face {
   font-family: 'IBMPlexSans-Bold';
@@ -33,7 +33,7 @@
   font-style: normal;
   font-weight: 400;
   src: url('./fonts/JetBrainsMono-Regular.woff') format('woff'), url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
-} */
+}
 
 body {
   margin: 0;
