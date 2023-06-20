@@ -1,17 +1,27 @@
 import React from 'react';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Styles from './app-header.module.css';
-import { AppHeaderContainer } from './app-header-container';
 
 export function AppHeader() {
   return (
     <header className={Styles.header}>
       <div className={Styles.header__box}>
-        <AppHeaderContainer text={'Конструктор'} logo={<BurgerIcon />} />
-        <AppHeaderContainer text={'Лента заказов'} logo={<ListIcon />} />
+        <div className={Styles.header__container}>
+          <BurgerIcon />
+          <p>Конструктор</p>
+        </div>
+        <div className={Styles.header__container}>
+          <ListIcon />
+          <p>Лента заказов</p>
+        </div>
       </div>
       <Logo />
-      <AppHeaderContainer text={'Личный кабинет'} logo={<ProfileIcon />} />
+      <div className={Styles.header__container}>
+        <ProfileIcon />
+        <p>Личный кабинет</p>
+      </div>
     </header>
   );
 }
+
+// Создать папку техт
