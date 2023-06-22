@@ -1,6 +1,10 @@
 @import url(./vendor/normalize.css);
 
-@font-face {
+body {
+  margin: 0;
+}
+
+/* @font-face {
   font-family: 'Iceland-Regular';
   font-style: normal;
   font-weight: 400;
@@ -19,8 +23,4 @@
   font-style: normal;
   font-weight: 400;
   src: url('./fonts/JetBrainsMono-Regular.woff') format('woff'), url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
-}
-
-body {
-  margin: 0;
-}
+} */

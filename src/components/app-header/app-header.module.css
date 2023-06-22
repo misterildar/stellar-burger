@@ -4,15 +4,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 26px 340px;
+  padding: 26px 299px 26px 381px;
+  margin-top: 32px;
+  box-sizing: border-box;
 }
 
-.header__box {
+.box {
   display: flex;
   column-gap: 49px;
 }
 
-.header__container {
-  display: flex;
-  column-gap: 9px;
+.logo {
+  margin-right: 182px;
 }
