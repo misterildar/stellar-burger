@@ -13,7 +13,7 @@ export const BurgerIngredients = ({ data }) => {
     <section>
       <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
       <Navigation />
-      <div className={`${styles.container} `}>
+      <div className={`${styles.container} custom-scroll`}>
         <IngredientsContainer title="Булки" ingredients={buns} />
         <IngredientsContainer title="Соусы" ingredients={sauces} />
         <IngredientsContainer title="Начинки" ingredients={mains} />
