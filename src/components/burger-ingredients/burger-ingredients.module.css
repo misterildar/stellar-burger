@@ -1,16 +1,8 @@
-.section {
+.container {
   width: 600px;
   height: 912px;
   overflow: hidden;
-}
-
-.navBurger {
-  display: flex;
-  justify-content: space-around;
-  list-style-type: none;
-  margin: 0;
-}
-
-.container {
+  scroll-behavior: auto;
   overflow-y: scroll;
+  scroll-behavior: smooth;
 }

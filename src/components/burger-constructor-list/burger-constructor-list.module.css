@@ -1,0 +1,26 @@
+.list {
+  display: flex;
+  /* justify-content: baseline; */
+  align-items: center;
+}
+
+.container {
+  width: 536px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.image {
+  width: 80px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+}
+/* 
+.item {
+  display: flex;
+  align-items: center;
+} */
