@@ -9,12 +9,8 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <div className={styles.container}>
-        {/* <div className={styles.containerColumn}> */}
         <BurgerIngredients data={data} />
-        {/* </div> */}
-        {/* <div className={styles.containerColumn}> */}
         <BurgerConstructor data={data} />
-        {/* </div> */}
       </div>
     </div>
   );

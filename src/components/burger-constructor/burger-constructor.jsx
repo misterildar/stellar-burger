@@ -4,7 +4,7 @@ import { BurgerConstructorList } from '../burger-constructor-list/burger-constru
 
 export const BurgerConstructor = ({ data }) => {
   return (
-    <div className={`${styles.box} pt-25 pb-10`}>
+    <div className={`${styles.box} mt-25 pb-10`}>
       {data.map((el) => (
         <BurgerConstructorList lists={el} key={el._id} />
       ))}
