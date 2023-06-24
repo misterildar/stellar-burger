@@ -1,0 +1,17 @@
+.container {
+  width: 568px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #1c1c21;
+  border-radius: 40px;
+}
+
+.image {
+  width: 80px;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+}
