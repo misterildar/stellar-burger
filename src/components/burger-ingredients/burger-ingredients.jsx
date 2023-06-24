@@ -7,11 +7,10 @@ export const BurgerIngredients = ({ data }) => {
   const buns = data.filter((el) => el.type === 'bun');
   const sauces = data.filter((el) => el.type === 'sauce');
   const mains = data.filter((el) => el.type === 'main');
-  const [current, setCurrent] = React.useState('one');
 
   return (
-    <section>
-      <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
+    <section className={'pl-25'}>
+      <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
       <Navigation />
       <div className={`${styles.container} custom-scroll`}>
         <IngredientsContainer title="Булки" ingredients={buns} />

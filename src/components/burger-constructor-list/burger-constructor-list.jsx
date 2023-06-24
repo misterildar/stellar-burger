@@ -5,14 +5,14 @@ import { CurrencyIcon, DragIcon, DeleteIcon } from '@ya.praktikum/react-develope
 export const BurgerConstructorList = ({ lists }) => {
   const { image, name, price } = lists;
   return (
-    <div className={`${styles.list} pt-4 pl-8 pb-4 pl-8`}>
+    <div className={`${styles.box} pl-2 pb-5 `}>
       <DragIcon type="primary" />
-      <div className={styles.container}>
-        <div className={styles.box}>
+      <div className={`${styles.container} p-4  ml-5`}>
+        <div className={`${styles.box}`}>
           <img className={styles.image} src={image} alt={name} />
           <p className="text text_type_main-default">{name}</p>
         </div>
-        <div className={styles.box}>
+        <div className={`${styles.box} pr-2`}>
           <div className={`${styles.box} pr-5`}>
             <p className={'text text_type_digits-default pr-2'}>{price}</p>
             <CurrencyIcon type="primary" />

@@ -1,10 +1,13 @@
+.section {
+  padding-top: 30px;
+}
+
 .box {
   width: 600px;
   height: 656px;
   display: grid;
   grid-template-columns: repeat(1, 568px);
-  row-gap: 16px;
+  row-gap: 4px;
   overflow: hidden;
   overflow-y: scroll;
-  /* scroll-behavior: smooth; */
 }

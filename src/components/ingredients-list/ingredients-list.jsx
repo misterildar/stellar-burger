@@ -6,14 +6,14 @@ export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price } = listIngredients;
 
   return (
-    <div className={styles.list}>
-      <Counter count={1} size="default" extraClass="m-1" />
+    <div className={`${styles.list} pb-8 pr-6`}>
+      <Counter count={1} size="default" extraClass="m-1 mr-5" />
       <img src={image} alt={name} />
-      <div className={styles.box}>
-        <p className={'text text_type_digits-default pr-2'}>{price}</p>
+      <div className={`${styles.box} pt-2`}>
+        <p className={'text text_type_digits-default pr-1'}>{price}</p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className={`${styles.container} text text_type_main-default`}>{name}</p>
+      <p className={`${styles.container} pt-2 text text_type_main-default`}>{name}</p>
     </div>
   );
 };

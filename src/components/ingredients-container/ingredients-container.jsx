@@ -5,8 +5,8 @@ import styles from './ingredients-container.module.css';
 export const IngredientsContainer = ({ ingredients, title }) => {
   return (
     <div>
-      <h2 className={`${styles.container} text_type_main-medium pt-6`}>{title}</h2>
-      <div className={styles.box}>
+      <h2 className={`${styles.container} text_type_main-medium pt-4 `}>{title}</h2>
+      <div className={`${styles.box} pl-8`}>
         {ingredients.map((el) => (
           <IngredientsList listIngredients={el} key={el._id} />
         ))}
