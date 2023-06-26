@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './create-order.module.css';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
 
 export const CreateOrder = ({ sum }) => {
-  const [modal, setModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
   const openModal = () => {
-    setModal(true);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -17,7 +24,11 @@ export const CreateOrder = ({ sum }) => {
       <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
         Оформить заказ
       </Button>
-      {/* <Modal /> */}
+      {showModal && (
+        <Modal onClose={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
     </div>
   );
 };
