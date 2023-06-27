@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './burger-constructor-list.module.css';
 import { CurrencyIcon, DragIcon, DeleteIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 
 export const BurgerConstructorList = ({ lists }) => {
   const { image, name, price } = lists;
@@ -22,4 +23,8 @@ export const BurgerConstructorList = ({ lists }) => {
       </div>
     </div>
   );
+};
+
+BurgerConstructorList.propTypes = {
+  lists: PropTypes.object,
 };

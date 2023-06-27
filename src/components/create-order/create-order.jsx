@@ -3,6 +3,7 @@ import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-co
 import styles from './create-order.module.css';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import PropTypes from 'prop-types';
 
 export const CreateOrder = ({ sum }) => {
   const [showModal, setShowModal] = useState(false);
@@ -31,4 +32,8 @@ export const CreateOrder = ({ sum }) => {
       )}
     </div>
   );
+};
+
+CreateOrder.propTypes = {
+  sum: PropTypes.number,
 };

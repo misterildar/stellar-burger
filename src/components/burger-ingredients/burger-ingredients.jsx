@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import { Navigation } from '../navigation/navigation';
+import PropTypes from 'prop-types';
 
 export const BurgerIngredients = ({ data }) => {
   const buns = data.filter((el) => el.type === 'bun');
@@ -19,4 +20,8 @@ export const BurgerIngredients = ({ data }) => {
       </div>
     </section>
   );
+};
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.array,
 };
