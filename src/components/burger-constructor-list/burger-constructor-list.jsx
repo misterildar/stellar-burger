@@ -26,5 +26,8 @@ export const BurgerConstructorList = ({ lists }) => {
 };
 
 BurgerConstructorList.propTypes = {
-  lists: PropTypes.object,
+  lists: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }),
 };

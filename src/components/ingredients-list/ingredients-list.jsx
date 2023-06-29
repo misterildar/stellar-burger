@@ -37,5 +37,8 @@ export const IngredientsList = ({ listIngredients }) => {
 };
 
 IngredientsList.propTypes = {
-  listIngredients: PropTypes.object,
+  listIngredients: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
+  }),
 };

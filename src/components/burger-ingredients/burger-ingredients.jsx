@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import { Navigation } from '../navigation/navigation';
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
-export const BurgerIngredients = ({ data }) => {
-  const buns = data.filter((el) => el.type === 'bun');
-  const sauces = data.filter((el) => el.type === 'sauce');
-  const mains = data.filter((el) => el.type === 'main');
+export const BurgerIngredients = ({ ingredients }) => {
+  const buns = useMemo(() => ingredients.filter((el) => el.type === 'bun'), [ingredients]);
+  const sauces = useMemo(() => ingredients.filter((el) => el.type === 'sauce'), [ingredients]);
+  const mains = useMemo(() => ingredients.filter((el) => el.type === 'main'), [ingredients]);
 
   return (
     <section className={'pl-25'}>
@@ -23,5 +24,9 @@ export const BurgerIngredients = ({ data }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.array,
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      ingredientPropType,
+    })
+  ),
 };

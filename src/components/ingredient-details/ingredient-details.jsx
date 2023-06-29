@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
 export const IngredientDetails = ({ listIngredients }) => {
   const { image, name, calories, proteins, fat, carbohydrates } = listIngredients;
@@ -35,5 +36,7 @@ export const IngredientDetails = ({ listIngredients }) => {
 };
 
 IngredientDetails.propTypes = {
-  listIngredients: PropTypes.object,
+  listIngredients: PropTypes.shape({
+    ingredientPropType,
+  }),
 };

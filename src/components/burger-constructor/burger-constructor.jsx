@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { BurgerConstructorList } from '../burger-constructor-list/burger-constructor-list';
 import { CreateOrder } from '../create-order/create-order';
 import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../utils/prop-types';
 
-export const BurgerConstructor = ({ data }) => {
-  let sum = data.reduce((acc, price) => acc + price.price, 0);
+export const BurgerConstructor = ({ ingredients }) => {
+  let sum = useMemo(() => ingredients.reduce((acc, price) => acc + price.price, 0), [ingredients]);
 
   return (
     <section className={styles.section}>
       <div className={`${styles.box} custom-scroll mt-15 pb-10`}>
-        {data.map((el) => (
+        {ingredients.map((el) => (
           <BurgerConstructorList lists={el} key={el._id} />
         ))}
       </div>
@@ -20,5 +21,9 @@ export const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.array,
+  ingredients: PropTypes.arrayOf(
+    PropTypes.shape({
+      ingredientPropType,
+    })
+  ),
 };
