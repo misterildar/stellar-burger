@@ -12,3 +12,7 @@
 .list {
   position: relative;
 }
+
+.image {
+  cursor: pointer;
+}

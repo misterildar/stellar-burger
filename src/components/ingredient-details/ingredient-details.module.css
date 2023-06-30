@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  width: 480px;
+  height: 240px;
+}
+
+.box {
+  display: flex;
+  column-gap: 30px;
+}
+
+.description {
+  composes: container;
+  row-gap: 10px;
+  list-style-type: none;
+}
+
+.title {
+  text-align: start;
+}
