@@ -18,10 +18,6 @@ export const IngredientsContainer = ({ ingredients, title }) => {
 };
 
 IngredientsContainer.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      ingredientPropType,
-    })
-  ),
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
   title: PropTypes.string.isRequired,
 };

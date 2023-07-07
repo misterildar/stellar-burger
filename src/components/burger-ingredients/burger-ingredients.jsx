@@ -15,18 +15,14 @@ export const BurgerIngredients = ({ ingredients }) => {
       <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
       <Navigation />
       <div className={`${styles.container} custom-scroll`}>
-        <IngredientsContainer title="Булки" ingredients={buns} />
-        <IngredientsContainer title="Соусы" ingredients={sauces} />
-        <IngredientsContainer title="Начинки" ingredients={mains} />
+        <IngredientsContainer id="buns" title="Булки" ingredients={buns} />
+        <IngredientsContainer id="sauces" title="Соусы" ingredients={sauces} />
+        <IngredientsContainer id="mains" title="Начинки" ingredients={mains} />
       </div>
     </section>
   );
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      ingredientPropType,
-    })
-  ),
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
 };
