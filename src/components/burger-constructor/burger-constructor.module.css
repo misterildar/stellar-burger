@@ -1,13 +1,29 @@
 .section {
-  padding-top: 30px;
+  padding-top: 100px;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 600px;
+  height: 465px;
+  overflow: hidden;
+  overflow-y: scroll;
+  row-gap: 16px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 16px;
 }
 
 .box {
-  width: 600px;
-  height: 656px;
-  display: grid;
-  grid-template-columns: repeat(1, 568px);
-  row-gap: 4px;
-  overflow: hidden;
-  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  align-items: center;
+  padding-bottom: 40px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
 }
