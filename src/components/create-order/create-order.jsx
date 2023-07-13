@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {
+  Button,
+  CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './create-order.module.css';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
@@ -22,7 +25,12 @@ export const CreateOrder = ({ sum }) => {
       <div className={'pr-10'}>
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+      <Button
+        htmlType="button"
+        type="primary"
+        size="medium"
+        onClick={openModal}
+      >
         Оформить заказ
       </Button>
       {showModal && (
