@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import styles from './order-details.module.css';
 import done from '../../images/done.svg';
-import { InitialIngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsStateContext } from '../../services/ingredientsContext';
 
 export const OrderDetails = () => {
-  const { ingredientBurgerState } = useContext(InitialIngredientsContext);
+  const ingredientBurgerState = useContext(IngredientsStateContext);
   const { order } = ingredientBurgerState.orderDetails;
 
   return (

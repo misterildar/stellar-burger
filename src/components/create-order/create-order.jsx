@@ -8,10 +8,10 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import PropTypes from 'prop-types';
 import { numberOrders } from '../api/api';
-import { InitialIngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsDispatchContext } from '../../services/ingredientsContext';
 
 export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
-  const { ingredientBurgerDispatch } = useContext(InitialIngredientsContext);
+  const ingredientBurgerDispatch = useContext(IngredientsDispatchContext);
 
   const [showModal, setShowModal] = useState(false);
 

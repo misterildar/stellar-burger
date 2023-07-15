@@ -7,12 +7,12 @@ import {
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
-import { InitialIngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsDispatchContext } from '../../services/ingredientsContext';
 
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
-  const { ingredientBurgerDispatch } = useContext(InitialIngredientsContext);
+  const ingredientBurgerDispatch = useContext(IngredientsDispatchContext);
 
   const [showModal, setShowModal] = useState(false);
 

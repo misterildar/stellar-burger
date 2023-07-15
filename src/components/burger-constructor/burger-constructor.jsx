@@ -7,10 +7,10 @@ import {
 import { CreateOrder } from '../create-order/create-order';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { InitialIngredientsContext } from '../../services/ingredientsContext';
+import { IngredientsStateContext } from '../../services/ingredientsContext';
 
 export const BurgerConstructor = () => {
-  const { ingredientBurgerState } = useContext(InitialIngredientsContext);
+  const ingredientBurgerState = useContext(IngredientsStateContext);
 
   const orderIngredientId = useMemo(() => {
     const ingredientId = [];

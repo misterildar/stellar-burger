@@ -6,7 +6,8 @@ import { useEffect, useReducer, useState } from 'react';
 import { getInitialIngredients } from '../api/api';
 import {
   IngredientsContext,
-  InitialIngredientsContext,
+  IngredientsStateContext,
+  IngredientsDispatchContext,
 } from '../../services/ingredientsContext';
 
 const ingredientsInitialState = {
@@ -62,16 +63,16 @@ function App() {
 
   return (
     <div className={styles.app}>
+      <AppHeader />
       <IngredientsContext.Provider value={ingredients}>
-        <InitialIngredientsContext.Provider
-          value={{ ingredientBurgerState, ingredientBurgerDispatch }}
-        >
-          <AppHeader />
-          <main className={styles.container}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </InitialIngredientsContext.Provider>
+        <IngredientsStateContext.Provider value={ingredientBurgerState}>
+          <IngredientsDispatchContext.Provider value={ingredientBurgerDispatch}>
+            <main className={styles.container}>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </main>
+          </IngredientsDispatchContext.Provider>
+        </IngredientsStateContext.Provider>
       </IngredientsContext.Provider>
     </div>
   );
