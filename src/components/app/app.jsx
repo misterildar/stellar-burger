@@ -12,6 +12,7 @@ import {
 const ingredientsInitialState = {
   ingredientBurger: [],
   bun: null,
+  orderDetails: {},
 };
 
 function reducer(state, action) {
@@ -23,9 +24,18 @@ function reducer(state, action) {
           bun: action.payload,
         };
       }
+
       return {
         ...state,
         ingredientBurger: [...state.ingredientBurger, { ...action.payload }],
+      };
+
+    case 'order':
+      return {
+        ...state,
+        orderDetails: { ...state.orderDetails, ...action.payload },
+        ingredientBurger: [],
+        bun: null,
       };
 
     case 'delet':
@@ -44,15 +54,12 @@ function App() {
 
   const [ingredients, setIngredients] = useState([]);
 
-  const getInitialDataServer = () => {
-    return getInitialIngredients().then((ingredients) => {
+  useEffect(() => {
+    getInitialIngredients().then((ingredients) => {
       setIngredients(ingredients.data);
     });
-  };
-
-  useEffect(() => {
-    getInitialDataServer();
   }, []);
+
   return (
     <div className={styles.app}>
       <IngredientsContext.Provider value={ingredients}>

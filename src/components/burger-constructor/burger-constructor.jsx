@@ -1,27 +1,29 @@
 import React, { useContext, useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import {
-  CurrencyIcon,
   DragIcon,
-  DeleteIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { CreateOrder } from '../create-order/create-order';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { IngredientsContext } from '../../services/ingredientsContext';
 import { InitialIngredientsContext } from '../../services/ingredientsContext';
 
 export const BurgerConstructor = () => {
-  const { ingredientBurgerState, ingredientBurgerDispatch } = useContext(
-    InitialIngredientsContext
-  );
+  const { ingredientBurgerState } = useContext(InitialIngredientsContext);
 
-  console.log(ingredientBurgerState.ingredientBurger);
-  console.log(ingredientBurgerState.bun);
+  const orderIngredientId = useMemo(() => {
+    const ingredientId = [];
+    ingredientBurgerState.ingredientBurger.forEach((el) =>
+      ingredientId.push(el._id)
+    );
+    if (ingredientBurgerState.bun) {
+      ingredientId.push(ingredientBurgerState.bun._id);
+    }
+    return ingredientId;
+  }, [ingredientBurgerState]);
 
-  const bun = ingredientBurgerState.bun;
+  const bun = useMemo(() => ingredientBurgerState.bun, [ingredientBurgerState]);
 
   const saucesAndMains = useMemo(
     () =>
@@ -29,7 +31,7 @@ export const BurgerConstructor = () => {
     [ingredientBurgerState]
   );
 
-  const sum = useMemo(() => {
+  const totalPrice = useMemo(() => {
     const sumIngredient = saucesAndMains.reduce(
       (acc, price) => acc + price.price,
       0
@@ -64,29 +66,37 @@ export const BurgerConstructor = () => {
               </div>
             );
           })}
-          {/* {!bun ||
-            (!saucesAndMains && (
-              <p className="text text_type_main-medium">
-                Добавьте сюда булку и ингедиенты для создания заказа
-              </p>
-            ))} */}
+          {!bun && (
+            <h2 className="text text_type_main-large  pt-30">
+              &larr; Нажми на&nbsp;булку и&nbsp;она окажется здесь. Так&nbsp;же
+              откроются Детали ингредиента, не&nbsp;переживай это временно :)
+            </h2>
+          )}
+          {bun && !saucesAndMains.length && (
+            <p className="text text_type_main-medium pl-10 pt-30">
+              А теперь выбери соусы и начинки.
+            </p>
+          )}
         </div>
 
         {bun && (
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${bun.name} (верх)`}
+            text={`${bun.name} (низ)`}
             price={bun.price}
             thumbnail={bun.image}
           />
         )}
       </div>
-      <CreateOrder sum={sum} />
+      <CreateOrder
+        totalPrice={totalPrice}
+        orderIngredientId={orderIngredientId}
+      />
     </section>
   );
 };
 
-// BurgerConstructor.propTypes = {
-//   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-// };
+BurgerConstructor.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
+};

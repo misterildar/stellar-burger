@@ -10,22 +10,14 @@ import PropTypes from 'prop-types';
 import { InitialIngredientsContext } from '../../services/ingredientsContext';
 
 export const IngredientsList = ({ listIngredients }) => {
-  const { image, name, price } = listIngredients;
+  const { image, name, price, key } = listIngredients;
 
   const { ingredientBurgerDispatch } = useContext(InitialIngredientsContext);
-
-  const addIngredient = () => {
-    ingredientBurgerDispatch({ type: 'add', payload: listIngredients });
-  };
-
-  // const deletIngredient = () => {
-  //   ingredientBurgerDispatch({ type: 'delet'});
-  // };
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    addIngredient();
+    ingredientBurgerDispatch({ type: 'add', payload: listIngredients });
     setShowModal(true);
   };
 
@@ -41,6 +33,7 @@ export const IngredientsList = ({ listIngredients }) => {
         alt={name}
         onClick={openModal}
         className={styles.image}
+        key={key}
       />
       <div className={`${styles.box} pt-2`}>
         <p className={'text text_type_digits-default pr-1'}>{price}</p>

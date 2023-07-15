@@ -35,6 +35,6 @@ export const BurgerIngredients = () => {
   );
 };
 
-// BurgerIngredients.propTypes = {
-//   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-// };
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
+};

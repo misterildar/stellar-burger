@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styles from './order-details.module.css';
 import done from '../../images/done.svg';
+import { InitialIngredientsContext } from '../../services/ingredientsContext';
 
 export const OrderDetails = () => {
+  const { ingredientBurgerState } = useContext(InitialIngredientsContext);
+  const { order } = ingredientBurgerState.orderDetails;
+
   return (
     <div className={`${styles.container} pt-30 pb-30`}>
-      <p className="text text_type_digits-large">{'22 web +'}</p>
+      <p className="text text_type_digits-large">{order.number}</p>
       <p className="text text_type_main-medium pt-8 pb-15">
         {'идентификатор заказа'}
       </p>
