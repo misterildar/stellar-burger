@@ -1,8 +1,8 @@
 .container {
   width: 600px;
-  height: 890px;
+  height: 720px;
   overflow: hidden;
-  scroll-behavior: auto;
   overflow-y: scroll;
-  scroll-behavior: smooth;
+  /* scroll-behavior: auto;
+  scroll-behavior: smooth; */
 }

@@ -1,14 +1,26 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import { Navigation } from '../navigation/navigation';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
+import { IngredientsContext } from '../../services/ingredientsContext';
 
-export const BurgerIngredients = ({ ingredients }) => {
-  const buns = useMemo(() => ingredients.filter((el) => el.type === 'bun'), [ingredients]);
-  const sauces = useMemo(() => ingredients.filter((el) => el.type === 'sauce'), [ingredients]);
-  const mains = useMemo(() => ingredients.filter((el) => el.type === 'main'), [ingredients]);
+export const BurgerIngredients = () => {
+  const ingredients = useContext(IngredientsContext);
+
+  const buns = useMemo(
+    () => ingredients.filter((el) => el.type === 'bun'),
+    [ingredients]
+  );
+  const sauces = useMemo(
+    () => ingredients.filter((el) => el.type === 'sauce'),
+    [ingredients]
+  );
+  const mains = useMemo(
+    () => ingredients.filter((el) => el.type === 'main'),
+    [ingredients]
+  );
 
   return (
     <section className={'pl-25'}>
@@ -24,5 +36,5 @@ export const BurgerIngredients = ({ ingredients }) => {
 };
 
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
+  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
 };

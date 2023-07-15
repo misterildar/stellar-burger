@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useState, useContext } from 'react';
+import {
+  Button,
+  CurrencyIcon,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './create-order.module.css';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import PropTypes from 'prop-types';
+import { numberOrders } from '../api/api';
+import { IngredientsDispatchContext } from '../../services/ingredientsContext';
 
-export const CreateOrder = ({ sum }) => {
+export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
+  const ingredientBurgerDispatch = useContext(IngredientsDispatchContext);
+
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    setShowModal(true);
+    return numberOrders(orderIngredientId).then((data) => {
+      ingredientBurgerDispatch({ type: 'order', payload: data });
+      setShowModal(true);
+    });
   };
 
   const closeModal = () => {
@@ -18,11 +28,16 @@ export const CreateOrder = ({ sum }) => {
 
   return (
     <div className={`${styles.container} pt-1 pr-6`}>
-      <p className={'text text_type_digits-medium pr-2'}>{sum}</p>
+      <p className={'text text_type_digits-medium pr-2'}>{totalPrice}</p>
       <div className={'pr-10'}>
         <CurrencyIcon type="primary" />
       </div>
-      <Button htmlType="button" type="primary" size="medium" onClick={openModal}>
+      <Button
+        htmlType="button"
+        type="primary"
+        size="medium"
+        onClick={openModal}
+      >
         Оформить заказ
       </Button>
       {showModal && (
