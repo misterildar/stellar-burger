@@ -1,13 +1,22 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import { Navigation } from '../navigation/navigation';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { IngredientsContext } from '../../services/ingredientsContext';
+// import { IngredientsContext } from '../../services/ingredientsContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burgerIngredientsReducer';
 
 export const BurgerIngredients = () => {
-  const ingredients = useContext(IngredientsContext);
+  // const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
+  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   const buns = useMemo(
     () => ingredients.filter((el) => el.type === 'bun'),

@@ -53,27 +53,27 @@ function App() {
     ingredientsInitialState
   );
 
-  const [ingredients, setIngredients] = useState([]);
+  // const [ingredients, setIngredients] = useState([]);
 
-  useEffect(() => {
-    getInitialIngredients().then((ingredients) => {
-      setIngredients(ingredients.data);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getInitialIngredients().then((ingredients) => {
+  //     setIngredients(ingredients.data);
+  //   });
+  // }, []);
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <IngredientsContext.Provider value={ingredients}>
-        <IngredientsStateContext.Provider value={ingredientBurgerState}>
-          <IngredientsDispatchContext.Provider value={ingredientBurgerDispatch}>
-            <main className={styles.container}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </main>
-          </IngredientsDispatchContext.Provider>
-        </IngredientsStateContext.Provider>
-      </IngredientsContext.Provider>
+      {/* <IngredientsContext.Provider value={ingredients}> */}
+      <IngredientsStateContext.Provider value={ingredientBurgerState}>
+        <IngredientsDispatchContext.Provider value={ingredientBurgerDispatch}>
+          <main className={styles.container}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </IngredientsDispatchContext.Provider>
+      </IngredientsStateContext.Provider>
+      {/* </IngredientsContext.Provider> */}
     </div>
   );
 }
