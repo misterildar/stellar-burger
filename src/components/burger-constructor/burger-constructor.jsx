@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import {
   DragIcon,
@@ -7,10 +7,9 @@ import {
 import { CreateOrder } from '../create-order/create-order';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { IngredientsStateContext } from '../../services/ingredientsContext';
-
+import { useSelector } from 'react-redux';
 export const BurgerConstructor = () => {
-  const ingredientBurgerState = useContext(IngredientsStateContext);
+  const ingredientBurgerState = useSelector((state) => state.burgerConstructor);
 
   const orderIngredientId = useMemo(() => {
     const ingredientId = [];
@@ -68,8 +67,7 @@ export const BurgerConstructor = () => {
           })}
           {!bun && (
             <h2 className="text text_type_main-large  pt-30">
-              &larr; Нажми на&nbsp;булку и&nbsp;она окажется здесь. Так&nbsp;же
-              откроются Детали ингредиента, не&nbsp;переживай это временно :)
+              &larr; Нажми на&nbsp;булку и&nbsp;она окажется здесь.
             </h2>
           )}
           {bun && !saucesAndMains.length && (

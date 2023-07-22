@@ -7,17 +7,18 @@ import {
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
-import { IngredientsDispatchContext } from '../../services/ingredientsContext';
+import { ADD_BURGER_INGREDIENTS } from '../../services/actions/burgerConstructorReducer';
+import { useDispatch } from 'react-redux';
 
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
-  const ingredientBurgerDispatch = useContext(IngredientsDispatchContext);
+  const dispatch = useDispatch();
 
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    ingredientBurgerDispatch({ type: 'add', payload: listIngredients });
+    dispatch({ type: ADD_BURGER_INGREDIENTS, payload: listIngredients });
     setShowModal(true);
   };
 
