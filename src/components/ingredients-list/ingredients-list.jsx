@@ -7,18 +7,14 @@ import {
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
-import { ADD_BURGER_INGREDIENTS } from '../../services/actions/burgerConstructorReducer';
-import { useDispatch } from 'react-redux';
+import { useDrag } from 'react-dnd';
 
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
-  const dispatch = useDispatch();
-
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
-    dispatch({ type: ADD_BURGER_INGREDIENTS, payload: listIngredients });
     setShowModal(true);
   };
 
@@ -26,9 +22,16 @@ export const IngredientsList = ({ listIngredients }) => {
     setShowModal(false);
   };
 
+  const [, drag] = useDrag({
+    type: 'ingredient',
+    item: listIngredients,
+  });
+
+  const count = 12;
+
   return (
-    <div className={`${styles.list} pb-8 pr-6`}>
-      <Counter count={1} size="default" extraClass="m-1 mr-5" />
+    <div ref={drag} className={`${styles.list} pb-8 pr-6 `}>
+      <Counter count={count} size="default" extraClass="m-1 mr-5" />
       <img
         src={image}
         alt={name}
