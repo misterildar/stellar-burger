@@ -23,11 +23,6 @@
   padding-bottom: 40px;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-}
-
 .border {
   outline: 5px solid #801ab2;
   border-radius: 25px;

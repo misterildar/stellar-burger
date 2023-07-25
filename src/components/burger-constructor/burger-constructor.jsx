@@ -1,15 +1,13 @@
 import React, { useMemo, useState } from 'react';
 import styles from './burger-constructor.module.css';
-import {
-  DragIcon,
-  ConstructorElement,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CreateOrder } from '../create-order/create-order';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { ADD_BURGER_INGREDIENTS } from '../../services/actions/burgerConstructorReducer';
+import IngredientsBox from '../ingredients-box/Ingredients-box';
 
 export const BurgerConstructor = () => {
   const ingredientBurgerState = useSelector((state) => state.burgerConstructor);
@@ -58,7 +56,38 @@ export const BurgerConstructor = () => {
       addBurgerIngredients(item);
     },
   });
+  ///////////////////////////////////////////////////////
+  //   const PETS = [
+  //     { id: 1, name: 'dog' },
+  //     { id: 2, name: 'cat' },
+  //     { id: 3, name: 'fish' },
+  //     { id: 4, name: 'hamster' },
+  // ]
 
+  //      const [pets, setPets] = useState(PETS)
+
+  //     const movePetListItem = useCallback(
+  //         (dragIndex, hoverIndex) => {
+  //             const dragItem = pets[dragIndex]
+  //             const hoverItem = pets[hoverIndex]
+  //             // Swap places of dragItem and hoverItem in the pets array
+  //             setPets(pets => {
+  //                 const updatedPets = [...pets]
+  //                 updatedPets[dragIndex] = hoverItem
+  //                 updatedPets[hoverIndex] = dragItem
+  //                 return updatedPets
+  //             })
+  //         },
+  //         [pets],
+
+  // перемещение ингредиентов
+  // const moveIngredientItem = useCallback(
+  //   (dragIndex, hoverIndex) => {
+  //     dispatch(moveIngredient(dragIndex, hoverIndex));
+  //   },
+  //   [dispatch]
+  // );
+  ///////////////////////////////////////////////////////////////
   return (
     <section className={styles.section}>
       <div className={isHover ? styles.border : ''}>
@@ -74,18 +103,10 @@ export const BurgerConstructor = () => {
           )}
 
           <div className={`${styles.container} custom-scroll`}>
-            {saucesAndMains.map((el) => {
-              return (
-                <div key={el._id} className={styles.item}>
-                  <DragIcon type="primary" />
-                  <ConstructorElement
-                    text={el.name}
-                    price={el.price}
-                    thumbnail={el.image}
-                  />
-                </div>
-              );
-            })}
+            {saucesAndMains.map((el) => (
+              <IngredientsBox el={el} />
+            ))}
+
             {!bun && (
               <h2 className="text text_type_main-large  pt-30">
                 &larr; Перенеси сюда&nbsp;булку и&nbsp;она окажется здесь.
