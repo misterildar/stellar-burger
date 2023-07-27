@@ -1,35 +1,116 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
-import { Navigation } from '../navigation/navigation';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { IngredientsContext } from '../../services/ingredientsContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredients } from '../../services/actions/burgerIngredients';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useInView } from 'react-intersection-observer';
+
+const getIngredientsState = (state) => state.burgerIngredients.ingredients;
 
 export const BurgerIngredients = () => {
-  const ingredients = useContext(IngredientsContext);
+  const ingredients = useSelector(getIngredientsState);
+
+  const [bunsRef, bunsInView] = useInView({ threshold: 0 });
+
+  const [saucesRef, saucesInView] = useInView({ threshold: 0.8 });
+
+  const [mainsRef, mainsInView] = useInView({ threshold: 0.3 });
+
+  const [current, setCurrent] = useState();
+
+  useEffect(() => {
+    if (bunsInView) {
+      setCurrent('bun');
+    }
+    if (saucesInView) {
+      setCurrent('sauce');
+    }
+    if (mainsInView) {
+      setCurrent('main');
+    }
+  }, [bunsInView, saucesInView, mainsInView]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   const buns = useMemo(
     () => ingredients.filter((el) => el.type === 'bun'),
     [ingredients]
   );
+
   const sauces = useMemo(
     () => ingredients.filter((el) => el.type === 'sauce'),
     [ingredients]
   );
+
   const mains = useMemo(
     () => ingredients.filter((el) => el.type === 'main'),
     [ingredients]
   );
 
+  const element = (tab) => {
+    const container = document.getElementById(tab);
+    if (container) container.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className={'pl-25'}>
       <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
-      <Navigation />
+      <div style={{ display: 'flex' }}>
+        <Tab
+          value="bun"
+          active={current === 'bun'}
+          onClick={() => {
+            element('bun');
+          }}
+        >
+          Булки
+        </Tab>
+        <Tab
+          value="sauce"
+          active={current === 'sauce'}
+          onClick={() => {
+            element('sauce');
+          }}
+        >
+          Соусы
+        </Tab>
+        <Tab
+          value="main"
+          active={current === 'main'}
+          onClick={() => {
+            element('main');
+          }}
+        >
+          Начинки
+        </Tab>
+      </div>
       <div className={`${styles.container} custom-scroll`}>
-        <IngredientsContainer id="buns" title="Булки" ingredients={buns} />
-        <IngredientsContainer id="sauces" title="Соусы" ingredients={sauces} />
-        <IngredientsContainer id="mains" title="Начинки" ingredients={mains} />
+        <IngredientsContainer
+          id="bun"
+          title="Булки"
+          ingredients={buns}
+          ref={bunsRef}
+        />
+        <IngredientsContainer
+          id="sauce"
+          title="Соусы"
+          ingredients={sauces}
+          ref={saucesRef}
+        />
+
+        <IngredientsContainer
+          id="main"
+          title="Начинки"
+          ingredients={mains}
+          ref={mainsRef}
+        />
       </div>
     </section>
   );

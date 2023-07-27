@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
 import styles from './order-details.module.css';
 import done from '../../images/done.svg';
-import { IngredientsStateContext } from '../../services/ingredientsContext';
+import { useSelector } from 'react-redux';
 
 export const OrderDetails = () => {
-  const ingredientBurgerState = useContext(IngredientsStateContext);
-  const { order } = ingredientBurgerState.orderDetails;
+  const { order } = useSelector((store) => store.orderDetails.orderDetails);
 
   return (
     <div className={`${styles.container} pt-30 pb-30`}>

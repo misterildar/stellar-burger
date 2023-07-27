@@ -4,20 +4,23 @@ import styles from './ingredients-container.module.css';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 
-export const IngredientsContainer = ({ ingredients, title }) => {
+export const IngredientsContainer = React.forwardRef((props, ref) => {
   return (
     <div>
-      <h2 className={`${styles.container} text_type_main-medium pt-4 `}>
-        {title}
+      <h2
+        className={`${styles.container} text_type_main-medium pt-4 `}
+        id={props.id}
+      >
+        {props.title}
       </h2>
-      <div className={`${styles.box} pl-8`}>
-        {ingredients.map((el) => (
+      <div ref={ref} className={`${styles.box} pl-8`}>
+        {props.ingredients.map((el) => (
           <IngredientsList listIngredients={el} key={el._id} />
         ))}
       </div>
     </div>
   );
-};
+});
 
 IngredientsContainer.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,

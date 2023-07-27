@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   CurrencyIcon,
@@ -8,16 +8,18 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
 import PropTypes from 'prop-types';
 import { numberOrders } from '../api/api';
-import { IngredientsDispatchContext } from '../../services/ingredientsContext';
+import { useDispatch } from 'react-redux';
+import { GET_ORDER_SUCCESS } from '../../services/actions/orderDetails';
+import { CLEAR_INGREDIENTS } from '../../services/actions/burgerConstructor';
 
 export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
-  const ingredientBurgerDispatch = useContext(IngredientsDispatchContext);
-
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
     return numberOrders(orderIngredientId).then((data) => {
-      ingredientBurgerDispatch({ type: 'order', payload: data });
+      dispatch({ type: GET_ORDER_SUCCESS, payload: data });
+      dispatch({ type: CLEAR_INGREDIENTS });
       setShowModal(true);
     });
   };

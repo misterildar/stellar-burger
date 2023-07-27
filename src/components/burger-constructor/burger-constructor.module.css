@@ -6,7 +6,7 @@
 
 .container {
   width: 600px;
-  height: 465px;
+  max-height: 465px;
   overflow: hidden;
   overflow-y: scroll;
   row-gap: 16px;
@@ -23,7 +23,7 @@
   padding-bottom: 40px;
 }
 
-.item {
-  display: flex;
-  align-items: center;
+.border {
+  outline: 5px solid #801ab2;
+  border-radius: 25px;
 }
