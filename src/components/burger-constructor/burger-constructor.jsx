@@ -9,15 +9,20 @@ import { useDrop } from 'react-dnd';
 import {
   ADD_BURGER_INGREDIENTS,
   MOVE_INGREDIENT,
-} from '../../services/actions/burgerConstructorReducer';
+} from '../../services/actions/burgerConstructor';
 import IngredientsBox from '../ingredients-box/Ingredients-box';
+import { v4 as uuidv4 } from 'uuid';
+
+const getBurgerConstructor = (state) => state.burgerConstructor;
+const getMoveIngredientsState = (state) =>
+  state.burgerConstructor.ingredientBurger;
 
 export const BurgerConstructor = () => {
-  const ingredientBurgerState = useSelector((state) => state.burgerConstructor);
   const dispatch = useDispatch();
-  const moveIngredientsState = useSelector(
-    (state) => state.burgerConstructor.ingredientBurger
-  );
+
+  const ingredientBurgerState = useSelector(getBurgerConstructor);
+
+  const moveIngredientsState = useSelector(getMoveIngredientsState);
   const orderIngredientId = useMemo(() => {
     const ingredientId = [];
 
@@ -37,7 +42,6 @@ export const BurgerConstructor = () => {
       ingredientBurgerState.ingredientBurger.filter((el) => el.type !== 'bun'),
     [ingredientBurgerState]
   );
-
   const totalPrice = useMemo(() => {
     const sumIngredient = saucesAndMains.reduce(
       (acc, price) => acc + price.price,
@@ -53,7 +57,11 @@ export const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      dispatch({ type: ADD_BURGER_INGREDIENTS, payload: item });
+      dispatch({
+        type: ADD_BURGER_INGREDIENTS,
+        uuid: uuidv4(),
+        payload: item,
+      });
     },
   });
 
@@ -88,7 +96,7 @@ export const BurgerConstructor = () => {
             {saucesAndMains.map((el, index) => (
               <IngredientsBox
                 el={el}
-                key={index}
+                key={el.uuid}
                 index={index}
                 moveListItem={moveListItem}
               />

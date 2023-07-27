@@ -10,12 +10,12 @@ import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 
+const getburgerConstructor = (state) => state.burgerConstructor;
+
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
-  const { ingredientBurger, bun } = useSelector(
-    (state) => state.burgerConstructor
-  );
+  const { ingredientBurger, bun } = useSelector(getburgerConstructor);
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {

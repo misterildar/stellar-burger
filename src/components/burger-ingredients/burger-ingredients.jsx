@@ -4,14 +4,14 @@ import { IngredientsContainer } from '../ingredients-container/ingredients-conta
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/burgerIngredientsReducer';
+import { getIngredients } from '../../services/actions/burgerIngredients';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
 
+const getIngredientsState = (state) => state.burgerIngredients.ingredients;
+
 export const BurgerIngredients = () => {
-  const ingredients = useSelector(
-    (state) => state.burgerIngredients.ingredients
-  );
+  const ingredients = useSelector(getIngredientsState);
 
   const [bunsRef, bunsInView] = useInView({ threshold: 0 });
 
@@ -54,17 +54,40 @@ export const BurgerIngredients = () => {
     [ingredients]
   );
 
+  const element = (tab) => {
+    const container = document.getElementById(tab);
+    if (container) container.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className={'pl-25'}>
       <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
       <div style={{ display: 'flex' }}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab
+          value="bun"
+          active={current === 'bun'}
+          onClick={() => {
+            element('bun');
+          }}
+        >
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab
+          value="sauce"
+          active={current === 'sauce'}
+          onClick={() => {
+            element('sauce');
+          }}
+        >
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab
+          value="main"
+          active={current === 'main'}
+          onClick={() => {
+            element('main');
+          }}
+        >
           Начинки
         </Tab>
       </div>

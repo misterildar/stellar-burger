@@ -9,8 +9,8 @@ import { OrderDetails } from '../order-details/order-details';
 import PropTypes from 'prop-types';
 import { numberOrders } from '../api/api';
 import { useDispatch } from 'react-redux';
-import { ORDER } from '../../services/actions/orderDetailsReducer';
-import { CLEAR_INGREDIENTS } from '../../services/actions/burgerConstructorReducer';
+import { GET_ORDER_SUCCESS } from '../../services/actions/orderDetails';
+import { CLEAR_INGREDIENTS } from '../../services/actions/burgerConstructor';
 
 export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
 
   const openModal = () => {
     return numberOrders(orderIngredientId).then((data) => {
-      dispatch({ type: ORDER, payload: data });
+      dispatch({ type: GET_ORDER_SUCCESS, payload: data });
       dispatch({ type: CLEAR_INGREDIENTS });
       setShowModal(true);
     });

@@ -7,7 +7,10 @@ import { ingredientPropType } from '../../utils/prop-types';
 export const IngredientsContainer = React.forwardRef((props, ref) => {
   return (
     <div>
-      <h2 className={`${styles.container} text_type_main-medium pt-4 `}>
+      <h2
+        className={`${styles.container} text_type_main-medium pt-4 `}
+        id={props.id}
+      >
         {props.title}
       </h2>
       <div ref={ref} className={`${styles.box} pl-8`}>

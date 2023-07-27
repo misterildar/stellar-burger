@@ -6,11 +6,10 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
-import { DELETE_INGREDIENT } from '../../services/actions/burgerConstructorReducer';
+import { DELETE_INGREDIENT } from '../../services/actions/burgerConstructor';
 
 const IngredientsBox = ({ el, index, moveListItem }) => {
   const dispatch = useDispatch();
-
   const [{ isDragging }, dragRef] = useDrag({
     type: 'item',
     item: { index },
@@ -43,12 +42,7 @@ const IngredientsBox = ({ el, index, moveListItem }) => {
   const opacity = isDragging ? 0 : 1;
 
   return (
-    <div
-      ref={dragDropRef}
-      key={index}
-      style={{ opacity }}
-      className={styles.element}
-    >
+    <div ref={dragDropRef} style={{ opacity }} className={styles.element}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={el.name}

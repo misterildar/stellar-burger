@@ -1,5 +1,5 @@
 import React from 'react'
-import { ADD_BURGER_INGREDIENTS, CLEAR_INGREDIENTS, DELETE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burgerConstructorReducer';
+import { ADD_BURGER_INGREDIENTS, CLEAR_INGREDIENTS, DELETE_INGREDIENT, MOVE_INGREDIENT } from '../actions/burgerConstructor';
 
 const initialState = {
   ingredientBurger: [],
@@ -20,7 +20,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
     }
       return {
         ...state,
-        ingredientBurger: [...state.ingredientBurger, { ...action.payload, key: action.key }],
+        ingredientBurger: [...state.ingredientBurger, { ...action.payload, uuid: action.uuid }],
       };
 
     case DELETE_INGREDIENT: {
