@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CreateOrder } from '../create-order/create-order';
@@ -6,14 +6,18 @@ import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { ADD_BURGER_INGREDIENTS } from '../../services/actions/burgerConstructorReducer';
+import {
+  ADD_BURGER_INGREDIENTS,
+  MOVE_INGREDIENT,
+} from '../../services/actions/burgerConstructorReducer';
 import IngredientsBox from '../ingredients-box/Ingredients-box';
 
 export const BurgerConstructor = () => {
   const ingredientBurgerState = useSelector((state) => state.burgerConstructor);
-
   const dispatch = useDispatch();
-
+  const moveIngredientsState = useSelector(
+    (state) => state.burgerConstructor.ingredientBurger
+  );
   const orderIngredientId = useMemo(() => {
     const ingredientId = [];
 
@@ -43,51 +47,29 @@ export const BurgerConstructor = () => {
     return sumIngredient + sumBun;
   }, [ingredientBurgerState]);
 
-  const addBurgerIngredients = (item) => {
-    dispatch({ type: ADD_BURGER_INGREDIENTS, payload: item });
-  };
-
   const [{ isHover }, drop] = useDrop({
     accept: 'ingredient',
     collect: (monitor) => ({
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      addBurgerIngredients(item);
+      dispatch({ type: ADD_BURGER_INGREDIENTS, payload: item });
     },
   });
-  ///////////////////////////////////////////////////////
-  //   const PETS = [
-  //     { id: 1, name: 'dog' },
-  //     { id: 2, name: 'cat' },
-  //     { id: 3, name: 'fish' },
-  //     { id: 4, name: 'hamster' },
-  // ]
 
-  //      const [pets, setPets] = useState(PETS)
+  const moveListItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragItem = moveIngredientsState[dragIndex];
+      const hoverItem = moveIngredientsState[hoverIndex];
+      const updateIngredients = [...moveIngredientsState];
+      updateIngredients[dragIndex] = hoverItem;
+      updateIngredients[hoverIndex] = dragItem;
 
-  //     const movePetListItem = useCallback(
-  //         (dragIndex, hoverIndex) => {
-  //             const dragItem = pets[dragIndex]
-  //             const hoverItem = pets[hoverIndex]
-  //             // Swap places of dragItem and hoverItem in the pets array
-  //             setPets(pets => {
-  //                 const updatedPets = [...pets]
-  //                 updatedPets[dragIndex] = hoverItem
-  //                 updatedPets[hoverIndex] = dragItem
-  //                 return updatedPets
-  //             })
-  //         },
-  //         [pets],
+      dispatch({ type: MOVE_INGREDIENT, payload: updateIngredients });
+    },
+    [ingredientBurgerState]
+  );
 
-  // перемещение ингредиентов
-  // const moveIngredientItem = useCallback(
-  //   (dragIndex, hoverIndex) => {
-  //     dispatch(moveIngredient(dragIndex, hoverIndex));
-  //   },
-  //   [dispatch]
-  // );
-  ///////////////////////////////////////////////////////////////
   return (
     <section className={styles.section}>
       <div className={isHover ? styles.border : ''}>
@@ -103,8 +85,13 @@ export const BurgerConstructor = () => {
           )}
 
           <div className={`${styles.container} custom-scroll`}>
-            {saucesAndMains.map((el) => (
-              <IngredientsBox el={el} />
+            {saucesAndMains.map((el, index) => (
+              <IngredientsBox
+                el={el}
+                key={index}
+                index={index}
+                moveListItem={moveListItem}
+              />
             ))}
 
             {!bun && (

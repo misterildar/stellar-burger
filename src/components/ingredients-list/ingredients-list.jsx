@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from './ingredients-list.module.css';
 import {
   CurrencyIcon,
@@ -8,10 +8,14 @@ import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
+import { useSelector } from 'react-redux';
 
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
+  const { ingredientBurger, bun } = useSelector(
+    (state) => state.burgerConstructor
+  );
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -22,16 +26,41 @@ export const IngredientsList = ({ listIngredients }) => {
     setShowModal(false);
   };
 
-  const [, drag] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: 'ingredient',
     item: listIngredients,
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
-  const count = 12;
+  const countIngredient = useMemo(() => {
+    const elementId = ingredientBurger.filter(
+      (el) => el._id === listIngredients._id
+    );
+    return elementId.length;
+  }, [listIngredients, ingredientBurger]);
+
+  const countBun = useMemo(() => {
+    if (bun === null) {
+      return;
+    } else if (bun !== null && listIngredients._id === bun._id) {
+      return 1;
+    }
+  }, [listIngredients, bun]);
+
+  const opacity = isDragging ? 0 : 1;
 
   return (
-    <div ref={drag} className={`${styles.list} pb-8 pr-6 `}>
-      <Counter count={count} size="default" extraClass="m-1 mr-5" />
+    <div ref={drag} style={{ opacity }} className={`${styles.list} pb-8 pr-6 `}>
+      {listIngredients.type !== 'bun' && countIngredient > 0 ? (
+        <Counter count={countIngredient} size="default" extraClass="m-1 mr-5" />
+      ) : countBun > 0 ? (
+        <Counter count={countBun} size="default" extraClass="m-1 mr-5" />
+      ) : (
+        ''
+      )}
+
       <img
         src={image}
         alt={name}
