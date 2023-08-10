@@ -1,17 +1,23 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/burgerIngredients';
+import { useSelector } from 'react-redux';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInView } from 'react-intersection-observer';
-
-const getIngredientsState = (state) => state.burgerIngredients.ingredients;
+import {
+  bunsIngredientsFind,
+  saucesIngredientsFind,
+  mainsIngredientsFind,
+} from '../../services/store/ingredientsSlice';
 
 export const BurgerIngredients = () => {
-  const ingredients = useSelector(getIngredientsState);
+  const buns = useSelector(bunsIngredientsFind);
+
+  const sauces = useSelector(saucesIngredientsFind);
+
+  const mains = useSelector(mainsIngredientsFind);
 
   const [bunsRef, bunsInView] = useInView({ threshold: 0 });
 
@@ -19,7 +25,7 @@ export const BurgerIngredients = () => {
 
   const [mainsRef, mainsInView] = useInView({ threshold: 0.3 });
 
-  const [current, setCurrent] = useState();
+  const [current, setCurrent] = useState('bun');
 
   useEffect(() => {
     if (bunsInView) {
@@ -33,59 +39,39 @@ export const BurgerIngredients = () => {
     }
   }, [bunsInView, saucesInView, mainsInView]);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  const buns = useMemo(
-    () => ingredients.filter((el) => el.type === 'bun'),
-    [ingredients]
-  );
-
-  const sauces = useMemo(
-    () => ingredients.filter((el) => el.type === 'sauce'),
-    [ingredients]
-  );
-
-  const mains = useMemo(
-    () => ingredients.filter((el) => el.type === 'main'),
-    [ingredients]
-  );
-
-  const element = (tab) => {
+  const scrollIngredients = (tab) => {
     const container = document.getElementById(tab);
     if (container) container.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section className={'pl-25'}>
-      <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
+      <h1 className='text text_type_main-large pt-8 pb-5'>Соберите бургер</h1>
+
       <div style={{ display: 'flex' }}>
         <Tab
-          value="bun"
+          value='bun'
           active={current === 'bun'}
           onClick={() => {
-            element('bun');
+            scrollIngredients('bun');
           }}
         >
           Булки
         </Tab>
         <Tab
-          value="sauce"
+          value='sauce'
           active={current === 'sauce'}
           onClick={() => {
-            element('sauce');
+            scrollIngredients('sauce');
           }}
         >
           Соусы
         </Tab>
         <Tab
-          value="main"
+          value='main'
           active={current === 'main'}
           onClick={() => {
-            element('main');
+            scrollIngredients('main');
           }}
         >
           Начинки
@@ -93,21 +79,21 @@ export const BurgerIngredients = () => {
       </div>
       <div className={`${styles.container} custom-scroll`}>
         <IngredientsContainer
-          id="bun"
-          title="Булки"
+          id='bun'
+          title='Булки'
           ingredients={buns}
           ref={bunsRef}
         />
         <IngredientsContainer
-          id="sauce"
-          title="Соусы"
+          id='sauce'
+          title='Соусы'
           ingredients={sauces}
           ref={saucesRef}
         />
 
         <IngredientsContainer
-          id="main"
-          title="Начинки"
+          id='main'
+          title='Начинки'
           ingredients={mains}
           ref={mainsRef}
         />

@@ -26,7 +26,7 @@ export const Modal = ({ onClose, children }) => {
     <>
       <div className={styles.modal} onClick={modalClick}>
         <button className={`${styles.button} pt-15`} onClick={onClose}>
-          <CloseIcon type="primary" />
+          {onClose && <CloseIcon type='primary' />}
         </button>
         {children}
       </div>

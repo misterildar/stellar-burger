@@ -9,13 +9,18 @@ import { Modal } from '../modal/modal';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
-
-const getburgerConstructor = (state) => state.burgerConstructor;
+import {
+  getBurgerConstructor,
+  bunCountFind,
+} from '../../services/store/constructorSlice';
 
 export const IngredientsList = ({ listIngredients }) => {
   const { image, name, price, key } = listIngredients;
 
-  const { ingredientBurger, bun } = useSelector(getburgerConstructor);
+  const { ingredientBurger } = useSelector(getBurgerConstructor);
+
+  const countBun = useSelector(bunCountFind);
+
   const [showModal, setShowModal] = useState(false);
 
   const openModal = () => {
@@ -41,22 +46,22 @@ export const IngredientsList = ({ listIngredients }) => {
     return elementId.length;
   }, [listIngredients, ingredientBurger]);
 
-  const countBun = useMemo(() => {
-    if (bun === null) {
-      return;
-    } else if (bun !== null && listIngredients._id === bun._id) {
-      return 1;
-    }
-  }, [listIngredients, bun]);
+  const countBuns = useMemo(() => {
+    return listIngredients.type === 'bun' && listIngredients._id === countBun;
+  }, [listIngredients, countBun]);
+
+  const countIngredients = useMemo(() => {
+    return listIngredients.type !== 'bun' && countIngredient !== 0;
+  }, [listIngredients, countIngredient]);
 
   const opacity = isDragging ? 0 : 1;
 
   return (
     <div ref={drag} style={{ opacity }} className={`${styles.list} pb-8 pr-6 `}>
-      {listIngredients.type !== 'bun' && countIngredient > 0 ? (
-        <Counter count={countIngredient} size="default" extraClass="m-1 mr-5" />
-      ) : countBun > 0 ? (
-        <Counter count={countBun} size="default" extraClass="m-1 mr-5" />
+      {countIngredients ? (
+        <Counter count={countIngredient} size='default' extraClass='m-1 mr-5' />
+      ) : countBuns ? (
+        <Counter count={1} size='default' extraClass='m-1 mr-5' />
       ) : (
         ''
       )}
@@ -70,7 +75,7 @@ export const IngredientsList = ({ listIngredients }) => {
       />
       <div className={`${styles.box} pt-2`}>
         <p className={'text text_type_digits-default pr-1'}>{price}</p>
-        <CurrencyIcon type="primary" />
+        <CurrencyIcon type='primary' />
       </div>
       <p className={`${styles.container} pt-2 text text_type_main-default`}>
         {name}

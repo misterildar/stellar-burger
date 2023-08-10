@@ -6,7 +6,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
-import { DELETE_INGREDIENT } from '../../services/actions/burgerConstructor';
+import { deleteIngredient } from '../../services/store/constructorSlice';
 
 const IngredientsBox = ({ el, index, moveListItem }) => {
   const dispatch = useDispatch();
@@ -43,14 +43,12 @@ const IngredientsBox = ({ el, index, moveListItem }) => {
 
   return (
     <div ref={dragDropRef} style={{ opacity }} className={styles.element}>
-      <DragIcon type="primary" />
+      <DragIcon type='primary' />
       <ConstructorElement
         text={el.name}
         price={el.price}
         thumbnail={el.image}
-        handleClose={() =>
-          dispatch({ type: DELETE_INGREDIENT, payload: index })
-        }
+        handleClose={() => dispatch(deleteIngredient(index))}
       />
     </div>
   );
