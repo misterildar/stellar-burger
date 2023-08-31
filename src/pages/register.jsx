@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Form from '../components/form/form';
 import { useDispatch } from 'react-redux';
+import { routes } from '../utils/constants';
+import { useForm } from '../hooks/use-form';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/store/userSlice';
 import {
@@ -14,20 +16,16 @@ const Register = () => {
 
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
+  const { values, handleChange } = useForm({
     name: '',
     email: '',
     password: '',
   });
 
-  function onChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(registerUser(form));
-    navigate('/login');
+    dispatch(registerUser(values));
+    navigate(routes.login);
   }
 
   return (
@@ -36,15 +34,15 @@ const Register = () => {
       buttonText='Зарегистрироваться'
       question='Уже зарегистрированы?'
       linkText='Войти'
-      linkPageTo='/login'
+      linkPageTo={routes.login}
       onSubmit={handleSubmit}
-      onChange={onChange}
+      onChange={handleChange}
     >
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={onChange}
-        value={form.name}
+        onChange={handleChange}
+        value={values.name}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
@@ -53,14 +51,14 @@ const Register = () => {
       />
 
       <EmailInput
-        onChange={onChange}
-        value={form.email}
+        onChange={handleChange}
+        value={values.email}
         name={'email'}
         isIcon={false}
       />
       <PasswordInput
-        onChange={onChange}
-        value={form.password}
+        onChange={handleChange}
+        value={values.password}
         name={'password'}
         extraClass='mb-2'
       />

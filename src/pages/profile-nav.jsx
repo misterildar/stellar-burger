@@ -3,11 +3,12 @@ import { useDispatch } from 'react-redux';
 import styles from './page-style.module.css';
 import { logOutUser } from '../services/store/userSlice';
 import { NavLink, Outlet, useMatch } from 'react-router-dom';
+import { routes } from '../utils/constants';
 
 const ProfileNav = () => {
   const dispatch = useDispatch();
 
-  const isProfile = useMatch('/profile-nav');
+  const isProfile = useMatch(routes.profile);
 
   const isOrder = useMatch('/profile-nav/order');
 
@@ -21,7 +22,7 @@ const ProfileNav = () => {
         <ul className={styles.box}>
           <li>
             <NavLink
-              to='/profile-nav'
+              to={routes.profile}
               className={isProfile ? styles.active : styles.inactive}
             >
               <p className='text text_type_main-medium'>Профиль</p>
@@ -29,14 +30,18 @@ const ProfileNav = () => {
           </li>
           <li>
             <NavLink
-              to='order'
+              to={routes.order}
               className={isOrder ? styles.active : styles.inactive}
             >
               <p className='text text_type_main-medium'>История заказов</p>
             </NavLink>
           </li>
           <li>
-            <NavLink to='/login' onClick={logOut} className={styles.inactive}>
+            <NavLink
+              to={routes.login}
+              onClick={logOut}
+              className={styles.inactive}
+            >
               <p className='text text_type_main-medium text_color_inactive'>
                 Выход
               </p>

@@ -9,6 +9,7 @@ import { Modal } from '../modal/modal';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import Register from '../../pages/register';
+import { routes } from '../../utils/constants';
 import { Route, Routes } from 'react-router-dom';
 import ProfileNav from '../../pages/profile-nav';
 import ProfileDataChange from '../../pages/profile';
@@ -60,32 +61,32 @@ function App() {
       )}
 
       <Routes location={background || location}>
-        <Route path='/' element={<Home />} />
+        <Route path={routes.home} element={<Home />} />
         <Route
-          path='/register'
+          path={routes.register}
           element={<OnlyUnAuth component={<Register />} />}
         />
-        <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
+        <Route
+          path={routes.login}
+          element={<OnlyUnAuth component={<Login />} />}
+        />
 
         <Route
-          path='/forgot-password'
+          path={routes.forgotPassword}
           element={<OnlyUnAuth component={<ForgotPassword />} />}
         />
 
         <Route
-          path='/reset-password'
+          path={routes.resetPassword}
           element={<OnlyUnAuth component={<ResetPassword />} />}
         />
 
-        <Route
-          path='/ingredient/:ingredientId'
-          element={<IngredientDetails />}
-        />
+        <Route path={routes.ingredients} element={<IngredientDetails />} />
 
-        <Route path='/feed' element={<OnlyAuth component={<Feed />} />} />
+        <Route path={routes.feed} element={<OnlyAuth component={<Feed />} />} />
 
         <Route
-          path='/profile-nav'
+          path={routes.profile}
           element={<OnlyAuth component={<ProfileNav />} />}
         >
           <Route
@@ -93,7 +94,7 @@ function App() {
             element={<OnlyAuth component={<ProfileDataChange />} />}
           />
           <Route
-            path='order'
+            path={routes.order}
             element={<OnlyAuth component={<ProfileHistoryOrders />} />}
           />
         </Route>
@@ -102,7 +103,7 @@ function App() {
       {background && (
         <Routes>
           <Route
-            path='/ingredient/:ingredientId'
+            path={routes.ingredients}
             element={
               <Modal onClose={handleModalClose}>
                 <IngredientDetails />

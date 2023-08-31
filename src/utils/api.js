@@ -1,5 +1,6 @@
 import { setAuthChecked, setUser } from '../services/store/userSlice';
 import { ubdateTokenUser } from '../services/store/userSlice';
+import { getUser } from '../services/store/userSlice';
 
 const baseUrl = 'https://norma.nomoreparties.space/api/';
 
@@ -74,6 +75,7 @@ const getLogin = (url, bodyData) => {
 const checkUserAuth = () => {
   return (dispatch) => {
     if (localStorage.getItem("accessToken")) {
+      dispatch(getUser())
       dispatch(ubdateTokenUser())
         .catch(() => {
           localStorage.removeItem("accessToken");
@@ -123,7 +125,7 @@ const fetchWithRefresh = async (url, options) => {
 
 
 const getUpdateToken = () => {
-  return fetchWithRefresh(`${baseUrl}auth/token`, {
+  return fetch(`${baseUrl}auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -148,7 +150,7 @@ const getForgotPassword = (mail) => {
 
 
 const getReserPassword = (form) => {
-  return fetchWithRefresh(`${baseUrl}password-reset/reset`, {
+  return fetch(`${baseUrl}password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
@@ -170,9 +172,9 @@ const getUserData = () => {
       authorization: localStorage.getItem('accessToken')
     },
   })
-    .then(checkErrorPromise)
-}
+    .then((res) => { return res.success ? res.user : '' })
 
+}
 
 const getUpdateUserData = (bodyData) => {
   return fetchWithRefresh(`${baseUrl}auth/user`, {
@@ -185,7 +187,8 @@ const getUpdateUserData = (bodyData) => {
       bodyData
     )
   })
-    .then(checkErrorPromise)
+    .then((res) => { return res.success ? res.user : '' })
+
 }
 
 export const api = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Form from '../components/form/form';
+import { routes } from '../utils/constants';
 import { useNavigate } from 'react-router-dom';
 import { forgotPasswordUser } from '../services/store/userSlice';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,7 +14,6 @@ const ForgotPassword = () => {
   const [value, setValue] = React.useState('');
 
   const onChange = (e) => {
-    e.preventDefault();
     setValue(e.target.value);
   };
 
@@ -21,7 +21,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (value) {
       dispatch(forgotPasswordUser(value));
-      navigate('/reset-password');
+      navigate(routes.resetPassword);
     }
   };
 
@@ -31,7 +31,7 @@ const ForgotPassword = () => {
       buttonText='Восстановить'
       question='Вспомнили пароль?'
       linkText='Войти'
-      linkPageTo='/login'
+      linkPageTo={routes.login}
       onSubmit={handleSubmit}
     >
       <EmailInput

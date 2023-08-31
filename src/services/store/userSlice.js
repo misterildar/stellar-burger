@@ -63,7 +63,6 @@ export const forgotPasswordUser = createAsyncThunk(
   async function (email, { rejectWithValue }) {
     try {
       const data = await api.getForgotPassword(email)
-      localStorage.setItem('resetEmail', email);
       return data
     } catch (error) {
       return rejectWithValue(error.message);
@@ -87,7 +86,7 @@ export const resetPasswordUser = createAsyncThunk(
 
 export const getUser = createAsyncThunk(
   'user/updateUser',
-  async function ({ rejectWithValue }) {
+  async function (_, { rejectWithValue }) {
     try {
       const data = await api.getUserData()
       return data
@@ -255,8 +254,8 @@ const userSlice = createSlice({
     [updateUser.fulfilled]: (state, action) => {
       state.isRequest = false;
       state.isFailed = false
-      state.email = action.payload.user.email;
-      state.name = action.payload.user.name;
+      state.email = action.payload.email;
+      state.name = action.payload.name;
       state.accessToken = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
       state.isAuthChecked = true;

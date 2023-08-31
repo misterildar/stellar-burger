@@ -13,6 +13,7 @@ import { OrderDetails } from '../order-details/order-details';
 import { getOrder } from '../../../services/store/orderDetailsSlice';
 import { clearIngredients } from '../../../services/store/constructorSlice';
 import { getBurgerConstructor } from '../../../services/store/constructorSlice';
+import { routes } from '../../../utils/constants';
 
 export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
   const { user } = useAuth();
@@ -33,7 +34,7 @@ export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
       dispatch(clearIngredients());
       setShowModal(true);
     } else {
-      navigate('/register');
+      navigate(routes.register);
     }
   };
 

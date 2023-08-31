@@ -1,5 +1,6 @@
 import { useAuth } from '../../hooks/use-auth';
 import { Navigate, useLocation } from 'react-router-dom';
+import { routes } from '../../utils/constants';
 
 const Protected = ({ onlyUnAuth = false, component }) => {
   const { user, isAuthChecked } = useAuth();
@@ -11,12 +12,12 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   }
 
   if (onlyUnAuth && user) {
-    const { from } = location.state || { from: { pathname: '/' } };
+    const { from } = location.state || { from: { pathname: routes.home } };
     return <Navigate to={from} />;
   }
 
   if (!onlyUnAuth && !user) {
-    return <Navigate to='/login' state={{ from: location }} />;
+    return <Navigate to={routes.register} state={{ from: location }} />;
   }
 
   return component;

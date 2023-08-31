@@ -1,52 +1,53 @@
 import React, { useState } from 'react';
 import Form from '../components/form/form';
 import { useDispatch } from 'react-redux';
+import { useAuth } from '../hooks/use-auth';
+import { useForm } from '../hooks/use-form';
 
 import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Navigate } from 'react-router-dom';
+import { routes } from '../utils/constants';
 import { resetPasswordUser } from '../services/store/userSlice';
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({
+  const { values, handleChange } = useForm({
     password: '',
     code: '',
   });
 
-  function onChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
+  const { isForgotPasswordRequest } = useAuth();
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(resetPasswordUser(form));
+    dispatch(resetPasswordUser(values));
   }
 
-  return (
+  return isForgotPasswordRequest ? (
     <Form
       title='Восстановление пароля'
       buttonText='Сохранить'
       question='Вспомнили пароль?'
       linkText='Войти'
-      linkPageTo='/login'
+      linkPageTo={routes.login}
       onSubmit={handleSubmit}
-      onChange={onChange}
     >
       <PasswordInput
         placeholder={'Введите новый пароль'}
-        onChange={onChange}
-        value={form.password}
+        onChange={handleChange}
+        value={values.password}
         name={'password'}
         extraClass='mb-2'
       />
       <Input
         type={'text'}
         placeholder={'Введите код из письма'}
-        onChange={onChange}
-        value={form.code}
+        onChange={handleChange}
+        value={values.code}
         name={'code'}
         error={false}
         errorText={'Ошибка'}
@@ -54,6 +55,8 @@ const ResetPassword = () => {
         extraClass='ml-1'
       />
     </Form>
+  ) : (
+    <Navigate to={routes.home} />
   );
 };
 

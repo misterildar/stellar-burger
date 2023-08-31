@@ -8,6 +8,7 @@ import {
 import { useDispatch } from 'react-redux';
 import Form from '../components/form/form';
 import { useAuth } from '../hooks/use-auth';
+import { useForm } from '../hooks/use-form';
 import styles from './page-style.module.css';
 import { updateUser } from '../services/store/userSlice';
 
@@ -16,7 +17,7 @@ const ProfileDataChange = () => {
 
   const dispatch = useDispatch();
 
-  const [form, setForm] = useState({
+  const { values, handleChange, setValues } = useForm({
     name: user.name,
     email: user.email,
     password: '',
@@ -26,26 +27,22 @@ const ProfileDataChange = () => {
 
   useEffect(() => {
     const isForm =
-      user.name !== form.name ||
-      user.email !== form.email ||
-      user.password !== form.password;
+      user.name !== values.name ||
+      user.email !== values.email ||
+      user.password !== values.password;
     setIsButton(isForm);
-  }, [form]);
-
-  function onChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  }
+  }, [values]);
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(updateUser(form));
+    dispatch(updateUser(values));
     setIsButton(false);
   }
 
   function back(e) {
     e.preventDefault();
     setIsButton(false);
-    setForm({
+    setValues({
       name: user.name,
       email: user.email,
       password: '',
@@ -57,9 +54,9 @@ const ProfileDataChange = () => {
       <Input
         type={'text'}
         placeholder={'Имя'}
-        onChange={onChange}
+        onChange={handleChange}
         icon='EditIcon'
-        value={form.name}
+        value={values.name}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
@@ -67,15 +64,15 @@ const ProfileDataChange = () => {
         extraClass='ml-1'
       />
       <EmailInput
-        onChange={onChange}
-        value={form.email}
+        onChange={handleChange}
+        value={values.email}
         name={'email'}
         placeholder='Логин'
         isIcon={true}
       />
       <PasswordInput
-        onChange={onChange}
-        value={form.password}
+        onChange={handleChange}
+        value={values.password}
         name={'password'}
         icon='EditIcon'
         placeholder={'Пароль'}
