@@ -4,9 +4,10 @@ import {
   DragIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useDrop, useDrag } from 'react-dnd';
-import { deleteIngredient } from '../../services/store/constructorSlice';
+import { deleteIngredient } from '../../../services/store/constructorSlice';
 
 const IngredientsBox = ({ el, index, moveListItem }) => {
   const dispatch = useDispatch();
@@ -27,16 +28,15 @@ const IngredientsBox = ({ el, index, moveListItem }) => {
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-
       if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
       if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
-
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
   });
 
   const ref = useRef(null);
+
   const dragDropRef = dragRef(dropRef(ref));
 
   const opacity = isDragging ? 0 : 1;
@@ -55,3 +55,9 @@ const IngredientsBox = ({ el, index, moveListItem }) => {
 };
 
 export default IngredientsBox;
+
+IngredientsBox.propTypes = {
+  el: PropTypes.object.isRequired,
+  index: PropTypes.number.isRequired,
+  moveListItem: PropTypes.func.isRequired,
+};

@@ -5,25 +5,30 @@ import {
   Logo,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { AppHeaderItem } from './app-header-item/app-header-item';
+import { Link, useMatch } from 'react-router-dom';
 import Styles from './app-header.module.css';
-import { AppHeaderItem } from '../app-header-item/app-header-item';
 
 export const AppHeader = () => {
+  const isConstructor = useMatch('/');
+  const isFeed = useMatch('/feed');
+  const isProfile = useMatch('/profile-nav/*');
+
   return (
     <header className={Styles.header}>
       <div className={Styles.box}>
-        <AppHeaderItem title="Конструктор" inactive={false}>
-          <BurgerIcon type="primary" />
+        <AppHeaderItem title='Конструктор' link='/'>
+          <BurgerIcon type={isConstructor ? 'primary' : 'secondary'} />
         </AppHeaderItem>
-        <AppHeaderItem title="Лента заказов">
-          <ListIcon type="secondary" />
+        <AppHeaderItem title='Лента заказов' link='/feed'>
+          <ListIcon type={isFeed ? 'primary' : 'secondary'} />
         </AppHeaderItem>
       </div>
-      <div className={Styles.logo}>
+      <Link to='/' className={Styles.logo}>
         <Logo />
-      </div>
-      <AppHeaderItem title="Личный кабинет">
-        <ProfileIcon type="secondary" />
+      </Link>
+      <AppHeaderItem title='Личный кабинет' link='/profile-nav'>
+        <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
       </AppHeaderItem>
     </header>
   );

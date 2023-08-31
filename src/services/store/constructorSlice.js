@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 
 
 const constructorSlice = createSlice({
@@ -10,13 +9,12 @@ const constructorSlice = createSlice({
   },
 
   reducers: {
-    addBurgerIngredients(state, action) {
-
-      if (action.payload.type === 'bun') {
-        state.bun = action.payload;
+    addBurgerIngredients(state, { payload }) {
+      if (payload.item.type === 'bun') {
+        state.bun = payload.item;
+      } else {
+        state.ingredientBurger = [...state.ingredientBurger, { ...payload.item, nanoidId: payload.nanoidId }]
       }
-      state.ingredientBurger = [...state.ingredientBurger, { ...action.payload, uuid: uuidv4() }]
-
     },
     deleteIngredient(state, action) {
       state.ingredientBurger = state.ingredientBurger.filter(
@@ -32,11 +30,24 @@ const constructorSlice = createSlice({
   }
 })
 
-
-
 const getBurgerIngredient = (state) => state.burgerConstructor.ingredientBurger
 
 const getBun = (state) => state.burgerConstructor.bun
+
+export const counterIngredientsFind = createSelector(
+  [getBurgerIngredient, getBun],
+  (ingredientBurger, bun) => {
+    const counter = {}
+    ingredientBurger.forEach((el) => {
+      if (!counter[el._id]) counter[el._id] = null
+      counter[el._id] += 1
+    })
+    if (bun) {
+      counter[bun._id] = 2
+    }
+    return counter
+  }
+)
 
 export const bunFind = createSelector(
   [getBun],
@@ -98,7 +109,6 @@ export const bunCountFind = createSelector(
       return bun._id
     }
   })
-
 
 export const { addBurgerIngredients, deleteIngredient, moveIngredient, clearIngredients } = constructorSlice.actions;
 

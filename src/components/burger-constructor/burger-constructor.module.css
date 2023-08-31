@@ -7,23 +7,23 @@
 .container {
   width: 600px;
   max-height: 465px;
+  row-gap: 16px;
+  padding-left: 16px;
   overflow: hidden;
   overflow-y: scroll;
-  row-gap: 16px;
   display: flex;
   flex-direction: column;
-  padding-left: 16px;
 }
 
 .box {
+  row-gap: 16px;
+  padding-bottom: 40px;
   display: flex;
   flex-direction: column;
-  row-gap: 16px;
   align-items: center;
-  padding-bottom: 40px;
 }
 
 .border {
-  outline: 5px solid #801ab2;
   border-radius: 25px;
+  outline: 5px solid #801ab2;
 }

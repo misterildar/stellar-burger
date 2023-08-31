@@ -1,0 +1,11 @@
+.form {
+  row-gap: 24px;
+  padding-top: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.color {
+  color: #4c4cff;
+}

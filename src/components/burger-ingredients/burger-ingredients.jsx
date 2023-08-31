@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import styles from './burger-ingredients.module.css';
-import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
 import { useSelector } from 'react-redux';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useInView } from 'react-intersection-observer';
 import {
   bunsIngredientsFind,
   saucesIngredientsFind,
   mainsIngredientsFind,
 } from '../../services/store/ingredientsSlice';
+import React, { useEffect, useState } from 'react';
+import styles from './burger-ingredients.module.css';
+import { useInView } from 'react-intersection-observer';
+import { ingredientPropType } from '../../utils/prop-types';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientsContainer } from './ingredients-container/ingredients-container';
 
 export const BurgerIngredients = () => {
+  const [current, setCurrent] = useState('bun');
+
   const buns = useSelector(bunsIngredientsFind);
 
-  const sauces = useSelector(saucesIngredientsFind);
-
   const mains = useSelector(mainsIngredientsFind);
+
+  const sauces = useSelector(saucesIngredientsFind);
 
   const [bunsRef, bunsInView] = useInView({ threshold: 0 });
 
   const [saucesRef, saucesInView] = useInView({ threshold: 0.8 });
 
   const [mainsRef, mainsInView] = useInView({ threshold: 0.3 });
-
-  const [current, setCurrent] = useState('bun');
 
   useEffect(() => {
     if (bunsInView) {
@@ -100,8 +100,4 @@ export const BurgerIngredients = () => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
 };

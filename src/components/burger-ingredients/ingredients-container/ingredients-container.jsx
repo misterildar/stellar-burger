@@ -1,8 +1,7 @@
 import React from 'react';
-import { IngredientsList } from '../ingredients-list/ingredients-list';
-import styles from './ingredients-container.module.css';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
+import { Card } from '../card/card';
+import styles from './ingredients-container.module.css';
 
 export const IngredientsContainer = React.forwardRef((props, ref) => {
   return (
@@ -15,7 +14,7 @@ export const IngredientsContainer = React.forwardRef((props, ref) => {
       </h2>
       <div ref={ref} className={`${styles.box} pl-8`}>
         {props.ingredients.map((el) => (
-          <IngredientsList listIngredients={el} key={el._id} />
+          <Card listIngredients={el} key={el._id} />
         ))}
       </div>
     </div>
@@ -23,6 +22,5 @@ export const IngredientsContainer = React.forwardRef((props, ref) => {
 });
 
 IngredientsContainer.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired).isRequired,
-  title: PropTypes.string.isRequired,
+  props: PropTypes.object,
 };

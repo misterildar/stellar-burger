@@ -1,12 +1,10 @@
+import { useDrop } from 'react-dnd';
 import React, { useCallback } from 'react';
 import styles from './burger-constructor.module.css';
-import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CreateOrder } from '../create-order/create-order';
-import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from 'react-dnd';
-import IngredientsBox from '../ingredients-box/Ingredients-box';
+import { CreateOrder } from './create-order/create-order';
+import IngredientsBox from '../burger-ingredients/ingredients-box/Ingredients-box';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import {
   getBurgerConstructor,
   getMoveIngredientsState,
@@ -19,17 +17,18 @@ import {
   addBurgerIngredients,
   moveIngredient,
 } from '../../services/store/constructorSlice';
+import { nanoid } from 'nanoid';
 
 export const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const bun = useSelector(bunFind);
 
+  const totalPrice = useSelector(totalPriceFind);
+
   const saucesAndMains = useSelector(saucesAndMainsFind);
 
   const orderIngredientId = useSelector(orderIngredientIdFind);
-
-  const totalPrice = useSelector(totalPriceFind);
 
   const ingredientBurgerState = useSelector(getBurgerConstructor);
 
@@ -41,7 +40,7 @@ export const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      dispatch(addBurgerIngredients(item));
+      dispatch(addBurgerIngredients({ item, nanoidId: nanoid() }));
     },
   });
 
@@ -76,7 +75,7 @@ export const BurgerConstructor = () => {
             {saucesAndMains.map((el, index) => (
               <IngredientsBox
                 el={el}
-                key={el.uuid}
+                key={el.nanoidId}
                 index={index}
                 moveListItem={moveListItem}
               />
@@ -111,8 +110,4 @@ export const BurgerConstructor = () => {
       />
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
 };

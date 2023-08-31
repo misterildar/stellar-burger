@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { getInitialIngredients } from '../../utils/ingredient-api';
+import { api } from '../../utils/api';
 
 
 export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
   async function (_, { rejectWithValue }) {
     try {
-      const { data } = await getInitialIngredients()
+      const { data } = await api.getInitialIngredients()
       if (data.length > 0) {
         return { data }
       };
@@ -46,9 +46,6 @@ const ingredientsSlice = createSlice({
 })
 
 const ingredientsState = state => state.burgerIngredients.ingredients
-
-
-
 
 export const bunsIngredientsFind = createSelector(
   [ingredientsState],

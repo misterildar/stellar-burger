@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { numberOrders } from '../../utils/ingredient-api';
+import { api } from '../../utils/api';
 
 export const getOrder = createAsyncThunk(
   'order/getOrder',
   async function (orderIngredientId, { rejectWithValue }) {
     try {
-      const { order } = await numberOrders(orderIngredientId);
+      const { order } = await api.numberOrders(orderIngredientId);
       return { order }
     } catch (error) {
       return rejectWithValue(error.message);

@@ -3,14 +3,16 @@
 }
 
 .box {
+  column-gap: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  column-gap: 10px;
 }
 
 .list {
   position: relative;
+  color: white;
+  text-decoration: none;
 }
 
 .image {

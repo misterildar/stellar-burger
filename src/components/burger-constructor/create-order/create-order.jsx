@@ -3,17 +3,23 @@ import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from './create-order.module.css';
-import { Modal } from '../modal/modal';
-import { OrderDetails } from '../order-details/order-details';
 import PropTypes from 'prop-types';
+import { Modal } from '../../modal/modal';
+import styles from './create-order.module.css';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../hooks/use-auth';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearIngredients } from '../../services/store/constructorSlice';
-import { getBurgerConstructor } from '../../services/store/constructorSlice';
-import { getOrder } from '../../services/store/orderDetailsSlice';
+import { OrderDetails } from '../order-details/order-details';
+import { getOrder } from '../../../services/store/orderDetailsSlice';
+import { clearIngredients } from '../../../services/store/constructorSlice';
+import { getBurgerConstructor } from '../../../services/store/constructorSlice';
 
 export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
+  const { user } = useAuth();
+
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [showModal, setShowModal] = useState(false);
 
@@ -22,9 +28,13 @@ export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
   const ingredients = ingredientBurger.length >= 1 && bun;
 
   const openModal = () => {
-    dispatch(getOrder(orderIngredientId));
-    dispatch(clearIngredients());
-    setShowModal(true);
+    if (user) {
+      dispatch(getOrder(orderIngredientId));
+      dispatch(clearIngredients());
+      setShowModal(true);
+    } else {
+      navigate('/register');
+    }
   };
 
   const closeModal = () => {
@@ -56,5 +66,6 @@ export const CreateOrder = ({ totalPrice, orderIngredientId }) => {
 };
 
 CreateOrder.propTypes = {
-  sum: PropTypes.number,
+  totalPrice: PropTypes.number,
+  orderIngredientId: PropTypes.array,
 };
