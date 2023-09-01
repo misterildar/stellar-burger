@@ -1,0 +1,20 @@
+.container {
+  text-align: center;
+}
+
+.box {
+  column-gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list {
+  position: relative;
+  color: white;
+  text-decoration: none;
+}
+
+.image {
+  cursor: pointer;
+}

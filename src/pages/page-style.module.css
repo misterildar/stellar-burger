@@ -1,0 +1,52 @@
+.page {
+  display: flex;
+  justify-content: center;
+  column-gap: 40px;
+}
+
+.container {
+  width: 850px;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+}
+
+.active {
+  text-decoration: none;
+  color: #f2f2f3;
+}
+
+.inactive {
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.nav {
+  top: 260px;
+  right: 700px;
+  width: 360px;
+  position: absolute;
+}
+
+.box {
+  row-gap: 50px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.history_container {
+  width: 850px;
+  padding-top: 50px;
+  padding-left: 400px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  row-gap: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

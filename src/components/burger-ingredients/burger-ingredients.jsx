@@ -1,25 +1,31 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styles from './burger-ingredients.module.css';
-import { IngredientsContainer } from '../ingredients-container/ingredients-container';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import { getIngredients } from '../../services/actions/burgerIngredients';
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
+import {
+  bunsIngredientsFind,
+  saucesIngredientsFind,
+  mainsIngredientsFind,
+} from '../../services/store/ingredientsSlice';
+import React, { useEffect, useState } from 'react';
+import styles from './burger-ingredients.module.css';
 import { useInView } from 'react-intersection-observer';
-
-const getIngredientsState = (state) => state.burgerIngredients.ingredients;
+import { ingredientPropType } from '../../utils/prop-types';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { IngredientsContainer } from './ingredients-container/ingredients-container';
 
 export const BurgerIngredients = () => {
-  const ingredients = useSelector(getIngredientsState);
+  const [current, setCurrent] = useState('bun');
+
+  const buns = useSelector(bunsIngredientsFind);
+
+  const mains = useSelector(mainsIngredientsFind);
+
+  const sauces = useSelector(saucesIngredientsFind);
 
   const [bunsRef, bunsInView] = useInView({ threshold: 0 });
 
   const [saucesRef, saucesInView] = useInView({ threshold: 0.8 });
 
   const [mainsRef, mainsInView] = useInView({ threshold: 0.3 });
-
-  const [current, setCurrent] = useState();
 
   useEffect(() => {
     if (bunsInView) {
@@ -33,59 +39,39 @@ export const BurgerIngredients = () => {
     }
   }, [bunsInView, saucesInView, mainsInView]);
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
-  const buns = useMemo(
-    () => ingredients.filter((el) => el.type === 'bun'),
-    [ingredients]
-  );
-
-  const sauces = useMemo(
-    () => ingredients.filter((el) => el.type === 'sauce'),
-    [ingredients]
-  );
-
-  const mains = useMemo(
-    () => ingredients.filter((el) => el.type === 'main'),
-    [ingredients]
-  );
-
-  const element = (tab) => {
+  const scrollIngredients = (tab) => {
     const container = document.getElementById(tab);
     if (container) container.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section className={'pl-25'}>
-      <h1 className="text text_type_main-large pt-8 pb-5">Соберите бургер</h1>
+      <h1 className='text text_type_main-large pt-8 pb-5'>Соберите бургер</h1>
+
       <div style={{ display: 'flex' }}>
         <Tab
-          value="bun"
+          value='bun'
           active={current === 'bun'}
           onClick={() => {
-            element('bun');
+            scrollIngredients('bun');
           }}
         >
           Булки
         </Tab>
         <Tab
-          value="sauce"
+          value='sauce'
           active={current === 'sauce'}
           onClick={() => {
-            element('sauce');
+            scrollIngredients('sauce');
           }}
         >
           Соусы
         </Tab>
         <Tab
-          value="main"
+          value='main'
           active={current === 'main'}
           onClick={() => {
-            element('main');
+            scrollIngredients('main');
           }}
         >
           Начинки
@@ -93,29 +79,25 @@ export const BurgerIngredients = () => {
       </div>
       <div className={`${styles.container} custom-scroll`}>
         <IngredientsContainer
-          id="bun"
-          title="Булки"
+          id='bun'
+          title='Булки'
           ingredients={buns}
           ref={bunsRef}
         />
         <IngredientsContainer
-          id="sauce"
-          title="Соусы"
+          id='sauce'
+          title='Соусы'
           ingredients={sauces}
           ref={saucesRef}
         />
 
         <IngredientsContainer
-          id="main"
-          title="Начинки"
+          id='main'
+          title='Начинки'
           ingredients={mains}
           ref={mainsRef}
         />
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientPropType.isRequired),
 };

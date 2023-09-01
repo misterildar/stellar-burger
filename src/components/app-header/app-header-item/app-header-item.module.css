@@ -1,0 +1,11 @@
+.active {
+  display: flex;
+  color: #f2f2f3;
+  text-decoration: none;
+}
+
+.inactive {
+  display: flex;
+  color: #8585ad;
+  text-decoration: none;
+}

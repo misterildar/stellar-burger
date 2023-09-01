@@ -1,0 +1,5 @@
+.box {
+  display: grid;
+  column-gap: 14px;
+  grid-template-columns: repeat(2, 275px);
+}
