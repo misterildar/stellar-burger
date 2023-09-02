@@ -83,7 +83,10 @@ function App() {
 
         <Route path={routes.ingredients} element={<IngredientDetails />} />
 
-        <Route path={routes.feed} element={<OnlyAuth component={<Feed />} />} />
+        <Route
+          path={routes.feed}
+          element={<OnlyUnAuth component={<Feed />} />}
+        />
 
         <Route
           path={routes.profile}
