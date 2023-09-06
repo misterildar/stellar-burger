@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import {
   bunsIngredientsFind,
@@ -8,7 +7,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css';
 import { useInView } from 'react-intersection-observer';
-import { ingredientPropType } from '../../utils/prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsContainer } from './ingredients-container/ingredients-container';
 

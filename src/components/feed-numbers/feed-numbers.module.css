@@ -1,0 +1,9 @@
+.finish_working {
+  display: flex;
+  column-gap: 80px;
+  padding-bottom: 60px;
+}
+
+.color {
+  color: #00cccc;
+}

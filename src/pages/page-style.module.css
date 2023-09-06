@@ -50,3 +50,25 @@
   flex-direction: column;
   align-items: center;
 }
+
+.feed_container {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed_box {
+  display: flex;
+  column-gap: 60px;
+}
+
+.feed_card_box {
+  width: 584px;
+  height: 980px;
+  row-gap: 16px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+}

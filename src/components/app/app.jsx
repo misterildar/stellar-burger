@@ -13,6 +13,7 @@ import { routes } from '../../utils/constants';
 import { Route, Routes } from 'react-router-dom';
 import ProfileNav from '../../pages/profile-nav';
 import ProfileDataChange from '../../pages/profile';
+import OrderDetails from '../../pages/order-details';
 import ProfileHistoryOrders from '../../pages/orders';
 import { AppHeader } from '../app-header/app-header';
 import ResetPassword from '../../pages/reset-password';
@@ -83,7 +84,9 @@ function App() {
 
         <Route path={routes.ingredients} element={<IngredientDetails />} />
 
-        <Route path={routes.feed} element={<OnlyAuth component={<Feed />} />} />
+        <Route path={routes.feed} element={<Feed />} />
+
+        <Route path={routes.orderDetails} element={<OrderDetails />} />
 
         <Route
           path={routes.profile}

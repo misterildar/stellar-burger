@@ -30,7 +30,6 @@ export const Card = ({ listIngredients }) => {
   });
 
   const opacity = isDragging ? 0 : 1;
-
   return (
     <Link
       key={ingredientId}
