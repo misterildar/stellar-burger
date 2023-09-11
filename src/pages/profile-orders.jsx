@@ -32,7 +32,7 @@ const ProfileHistoryOrders = () => {
   return showOrder ? (
     <div className={styles.profile_order}>
       <div className={`${styles.profile_card_box} custom-scroll`}>
-        {orders.orders.map((el) => (
+        {orders.orders.toReversed().map((el) => (
           <CardOrder orderData={el} key={el._id} isStatus={true} />
         ))}
       </div>

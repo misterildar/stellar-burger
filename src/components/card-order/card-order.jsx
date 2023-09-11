@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { nanoid } from '@reduxjs/toolkit';
 import styles from './card-order.module.css';
@@ -8,24 +8,37 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getIngredientsState } from '../../services/store/ingredientsSlice';
+import { object } from 'prop-types';
 
 const CardOrder = ({ orderData, isStatus = false }) => {
   const ingredientsAll = useSelector(getIngredientsState);
 
   const location = useLocation();
 
-  const orderIngredientData = orderData?.ingredients.map(
-    (id) => ingredientsAll?.filter((ingr) => ingr._id === id)[0]
+  const orderIngredientDataAll = orderData?.ingredients.map((id) =>
+    ingredientsAll?.find((ingr) => ingr._id === id)
   );
 
-  const bun = orderIngredientData?.filter((el) => el.type === 'bun')[0];
+  const orderIngredientData = useMemo(
+    () => orderIngredientDataAll.filter((el) => el !== undefined),
+    [orderIngredientDataAll]
+  );
 
-  const saucesAndMains = orderIngredientData?.filter((el) => el.type !== 'bun');
+  const bun = useMemo(
+    () => orderIngredientData?.find((el) => el.type === 'bun'),
+    [orderIngredientData]
+  );
+
+  const saucesAndMains = useMemo(
+    () => orderIngredientData?.filter((el) => el.type !== 'bun'),
+    [orderIngredientData]
+  );
 
   const saucesAndMainsPrice = saucesAndMains?.reduce(
     (acc, el) => acc + el.price,
     0
   );
+
   const totalPriceCardOrder = saucesAndMainsPrice + bun?.price * 2;
 
   let status =
@@ -45,7 +58,7 @@ const CardOrder = ({ orderData, isStatus = false }) => {
         <p className='text text_type_digits-default'>#{orderData.number}</p>
 
         <p className='text text_type_main-default text_color_inactive'>
-          <FormattedDate date={new Date(orderData.createdAt)} /> i-GMT+3
+          <FormattedDate date={new Date(orderData.createdAt)} />
         </p>
       </div>
       <p className={`${styles.card_name} text text_type_main-medium pt-6 pb-3`}>
@@ -65,7 +78,7 @@ const CardOrder = ({ orderData, isStatus = false }) => {
             return (
               <div
                 className={styles.image_box}
-                key={nanoid()}
+                key={index}
                 style={{
                   transform: `translateX(${40 * index}px)`,
                   zIndex: `${6 - index}`,

@@ -28,7 +28,7 @@ export const AppHeader = () => {
       <Link to={routes.home} className={Styles.logo}>
         <Logo />
       </Link>
-      <AppHeaderItem title='Личный кабинет' link={routes.profile}>
+      <AppHeaderItem title='Личный кабинет' link={routes.login}>
         <ProfileIcon type={isProfile ? 'primary' : 'secondary'} />
       </AppHeaderItem>
     </header>

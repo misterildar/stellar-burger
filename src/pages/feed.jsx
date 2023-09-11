@@ -29,11 +29,15 @@ const Feed = () => {
 
       <div className={styles.feed_box}>
         <div className={`${styles.feed_card_box} custom-scroll`}>
-          {orders.orders.map((el) => (
+          {orders?.orders?.map((el) => (
             <CardOrder orderData={el} key={el._id} />
           ))}
         </div>
-        <FeedNumbers total={orders.total} totalToday={orders.totalToday} />
+        <FeedNumbers
+          total={orders.total}
+          totalToday={orders.totalToday}
+          orderData={orders}
+        />
       </div>
     </div>
   ) : (

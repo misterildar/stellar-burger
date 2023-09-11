@@ -84,13 +84,11 @@ function App() {
 
         <Route path={routes.ingredients} element={<IngredientDetails />} />
 
-
         <Route path={routes.orderDetails} element={<OrderDetails />} />
 
         <Route path={routes.profileOrderDetails} element={<OrderDetails />} />
 
         <Route path={routes.feed} element={<Feed />} />
-
 
         <Route
           path={routes.profile}
