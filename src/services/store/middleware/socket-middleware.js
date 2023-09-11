@@ -33,7 +33,6 @@ export const socketMiddleware = (wsActions) => {
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          // TODO проверить данные parsedData
           dispatch(onMessage(parsedData));
         };
 

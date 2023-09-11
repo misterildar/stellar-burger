@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { routes } from '../utils/constants';
 import styles from './page-style.module.css';
 import { logOutUser } from '../services/store/userSlice';
 import { NavLink, Outlet, useMatch } from 'react-router-dom';
-import { routes } from '../utils/constants';
 
 const ProfileNav = () => {
   const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const ProfileNav = () => {
   const isOrder = useMatch('/profile-nav/order');
 
   const logOut = () => {
-    dispatch(logOutUser(localStorage.getItem('refreshToken')));
+    dispatch(logOutUser());
   };
 
   return (

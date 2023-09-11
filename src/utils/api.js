@@ -28,14 +28,21 @@ const numberOrders = (arrayIdOrder) => {
 }
 
 
-const getLogOut = (refreshToken) => {
+
+const orderImageDetails = (orderNumber) => {
+  return fetch(`${baseUrl}orders/${orderNumber}`).then(checkErrorPromise);
+};
+
+
+const getLogOut = () => {
   return fetch(`${baseUrl}auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
     },
     body: JSON.stringify({
-      'token': refreshToken
+      token: localStorage.getItem("refreshToken"),
+
     })
   })
     .then(checkErrorPromise)
@@ -195,6 +202,7 @@ export const api = {
   getInitialIngredients,
   getReserPassword,
   getForgotPassword,
+  orderImageDetails,
   getUpdateUserData,
   getUpdateToken,
   checkUserAuth,

@@ -10,7 +10,7 @@
   justify-content: center;
   position: absolute;
   overflow: hidden;
-  z-index: 2;
+  z-index: 10;
 }
 
 .button {

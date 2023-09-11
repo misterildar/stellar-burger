@@ -4,7 +4,7 @@ import styles from './feed-numbers.module.css';
 
 const FeedNumbers = ({ total, totalToday }) => {
   const finish = ['034533', '034534', '034535', '034536', '034537'];
-  //TODO
+  //TODO заменить статичные данные
   const working = ['034545', '034546', '034547'];
 
   return (

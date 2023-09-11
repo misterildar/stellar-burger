@@ -5,12 +5,12 @@ import {
   EmailInput,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import Form from '../components/form/form';
+import { updateUser } from '../services/store/userSlice';
 import { useAuth } from '../hooks/use-auth';
 import { useForm } from '../hooks/use-form';
 import styles from './page-style.module.css';
-import { updateUser } from '../services/store/userSlice';
+import Form from '../components/form/form';
+import { useDispatch } from 'react-redux';
 
 const ProfileDataChange = () => {
   const user = useAuth();

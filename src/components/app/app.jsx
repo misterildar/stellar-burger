@@ -13,12 +13,12 @@ import { routes } from '../../utils/constants';
 import { Route, Routes } from 'react-router-dom';
 import ProfileNav from '../../pages/profile-nav';
 import ProfileDataChange from '../../pages/profile';
-import OrderDetails from '../../pages/order-details';
-import ProfileHistoryOrders from '../../pages/orders';
 import { AppHeader } from '../app-header/app-header';
 import ResetPassword from '../../pages/reset-password';
 import ForgotPassword from '../../pages/forgot-password';
+import OrderDetails from '../order-details/order-details';
 import { useLocation, useNavigate } from 'react-router-dom';
+import ProfileHistoryOrders from '../../pages/profile-orders';
 import { getStatus } from '../../services/store/ingredientsSlice';
 import { getIngredients } from '../../services/store/ingredientsSlice';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
@@ -84,9 +84,11 @@ function App() {
 
         <Route path={routes.ingredients} element={<IngredientDetails />} />
 
-        <Route path={routes.feed} element={<Feed />} />
-
         <Route path={routes.orderDetails} element={<OrderDetails />} />
+
+        <Route path={routes.profileOrderDetails} element={<OrderDetails />} />
+
+        <Route path={routes.feed} element={<Feed />} />
 
         <Route
           path={routes.profile}
@@ -110,6 +112,22 @@ function App() {
             element={
               <Modal onClose={handleModalClose}>
                 <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path={routes.profileOrderDetails}
+            element={
+              <Modal onClose={handleModalClose}>
+                <OrderDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path={routes.orderDetails}
+            element={
+              <Modal onClose={handleModalClose}>
+                <OrderDetails />
               </Modal>
             }
           />

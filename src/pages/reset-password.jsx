@@ -3,13 +3,12 @@ import Form from '../components/form/form';
 import { useDispatch } from 'react-redux';
 import { useAuth } from '../hooks/use-auth';
 import { useForm } from '../hooks/use-form';
-
+import { Navigate } from 'react-router-dom';
+import { routes } from '../utils/constants';
 import {
   Input,
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Navigate } from 'react-router-dom';
-import { routes } from '../utils/constants';
 import { resetPasswordUser } from '../services/store/userSlice';
 
 const ResetPassword = () => {

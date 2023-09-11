@@ -36,7 +36,9 @@ export const wsOrderSlice = createReducer(initialState, (builder) => {
       state.connectingError = action.payload;
     })
     .addCase(wsMessage, (state, action) => {
-      state.orders = action.payload;
+      if (action.payload.success && action.payload.orders.length > 0) {
+        state.orders = action.payload;
+      }
     })
 })
 

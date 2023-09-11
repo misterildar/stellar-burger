@@ -1,20 +1,16 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { WS_ORDERS_URL } from '../utils/constants';
 import { useEffect } from 'react';
-import { connect, disconnect } from '../services/store/wsOrdersSlice';
-import CardOrder from '../components/card-order/card-order';
+import styles from './page-style.module.css';
 import Loader from '../components/loader/loader';
 import { Modal } from '../components/modal/modal';
-import styles from './page-style.module.css';
+import { WS_ORDERS_URL } from '../utils/constants';
+import { useDispatch, useSelector } from 'react-redux';
+import CardOrder from '../components/card-order/card-order';
 import FeedNumbers from '../components/feed-numbers/feed-numbers';
+import { connect, disconnect } from '../services/store/wsOrdersSlice';
 
 const Feed = () => {
   const dispatch = useDispatch();
-
-  const { orders, status } = useSelector((state) => state.wsOrder);
-
-  const showOrder = status === 'ONLINE' && orders.success === true;
 
   useEffect(() => {
     dispatch(connect(WS_ORDERS_URL));
@@ -22,6 +18,10 @@ const Feed = () => {
       dispatch(disconnect());
     };
   }, [dispatch]);
+
+  const { orders, status } = useSelector((state) => state.wsOrder);
+
+  const showOrder = status === 'ONLINE' && orders.success === true;
 
   return showOrder ? (
     <div className={styles.feed_container}>

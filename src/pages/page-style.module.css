@@ -72,3 +72,21 @@
   overflow: hidden;
   overflow-y: scroll;
 }
+
+.profile_card_box {
+  width: 830px;
+  max-height: 980px;
+  row-gap: 16px;
+  padding-left: 180px;
+  padding-right: 16px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.profile_order {
+  padding-top: 30px;
+  width: 844px;
+}

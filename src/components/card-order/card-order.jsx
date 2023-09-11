@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
 import styles from './card-order.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -6,26 +8,36 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getIngredientsState } from '../../services/store/ingredientsSlice';
-import { useSelector } from 'react-redux';
 
-const CardOrder = ({ orderData }) => {
-  const ingredients = useSelector(getIngredientsState);
+const CardOrder = ({ orderData, isStatus = false }) => {
+  const ingredientsAll = useSelector(getIngredientsState);
 
   const location = useLocation();
 
-  const orderIngredientsId = Array.from(new Set(orderData.ingredients));
-
-  const orderIngredientData = ingredients.filter((el) =>
-    orderIngredientsId.includes(el._id)
+  const orderIngredientData = orderData?.ingredients.map(
+    (id) => ingredientsAll?.filter((ingr) => ingr._id === id)[0]
   );
 
-  const totalPriceCardOrder = orderIngredientData.reduce(
+  const bun = orderIngredientData?.filter((el) => el.type === 'bun')[0];
+
+  const saucesAndMains = orderIngredientData?.filter((el) => el.type !== 'bun');
+
+  const saucesAndMainsPrice = saucesAndMains?.reduce(
     (acc, el) => acc + el.price,
     0
   );
+  const totalPriceCardOrder = saucesAndMainsPrice + bun?.price * 2;
+
+  let status =
+    orderData?.status == 'done'
+      ? { text: 'Выполнен', statusColor: '#00CCCC' }
+      : orderData == 'created'
+      ? { text: 'Создается', statusColor: '#F2F2F3' }
+      : { text: 'В ожидании', statusColor: '#F2F2F3' };
+
   return (
     <Link
-      to={`/order/${orderData.number}`}
+      to={`${location.pathname}/${orderData.number}`}
       state={{ background: location }}
       className={styles.card}
     >
@@ -36,17 +48,24 @@ const CardOrder = ({ orderData }) => {
           <FormattedDate date={new Date(orderData.createdAt)} /> i-GMT+3
         </p>
       </div>
-      <p className={`${styles.card_name} text text_type_main-medium pt-6 pb-6`}>
+      <p className={`${styles.card_name} text text_type_main-medium pt-6 pb-3`}>
         {orderData.name}
       </p>
-
+      {isStatus && (
+        <p
+          className='text text_type_main-default m-0'
+          style={{ color: status.statusColor }}
+        >
+          {status.text}
+        </p>
+      )}
       <div className={styles.image_price}>
         <div className={styles.image_container}>
           {orderIngredientData.slice(0, 6).map((el, index) => {
             return (
               <div
                 className={styles.image_box}
-                key={index}
+                key={nanoid()}
                 style={{
                   transform: `translateX(${40 * index}px)`,
                   zIndex: `${6 - index}`,
@@ -63,7 +82,7 @@ const CardOrder = ({ orderData }) => {
           {orderIngredientData.length > 5 && (
             <div className={styles.counter_container}>
               <p className={`text text_type_digits-default ${styles.counter}`}>
-                +{orderIngredientData.length - 5}
+                +{orderData.ingredients.length - 5}
               </p>
             </div>
           )}
