@@ -2,11 +2,12 @@ import React from 'react';
 import FeedItemNumbers from '../feed-item-numbers/feed-item-numbers';
 import styles from './feed-numbers.module.css';
 
+
 const FeedNumbers = ({ total, totalToday, orderData }) => {
   const finish = orderData.orders.filter((el) => el.status === 'done');
 
   const working = orderData.orders.filter((el) => el.status === 'created');
-
+  
   return (
     <div>
       <div className={styles.finish_working}>
@@ -18,6 +19,7 @@ const FeedNumbers = ({ total, totalToday, orderData }) => {
                 key={el}
               >
                 {el.number}
+
               </div>
             );
           })}
@@ -33,7 +35,6 @@ const FeedNumbers = ({ total, totalToday, orderData }) => {
           })}
         </FeedItemNumbers>
       </div>
-
       <FeedItemNumbers
         text={'Выполнено за все время:'}
         classNumber={'text text_type_digits-large pb-15'}
