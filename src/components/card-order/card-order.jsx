@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { nanoid } from '@reduxjs/toolkit';
 import styles from './card-order.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import {
@@ -8,7 +7,6 @@ import {
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getIngredientsState } from '../../services/store/ingredientsSlice';
-import { object } from 'prop-types';
 
 const CardOrder = ({ orderData, isStatus = false }) => {
   const ingredientsAll = useSelector(getIngredientsState);
