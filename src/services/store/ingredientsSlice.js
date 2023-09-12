@@ -45,34 +45,36 @@ const ingredientsSlice = createSlice({
   }
 })
 
-const ingredientsState = state => state.burgerIngredients.ingredients
+export const getIngredientsState = state => state.burgerIngredients.ingredients
+
+export const getBurgerConstructor = (state) => state.burgerConstructor;
+
+export const getStatus = (state) => state.burgerIngredients;
+
 
 export const bunsIngredientsFind = createSelector(
-  [ingredientsState],
+  [getIngredientsState],
   (ingredients) => {
     return ingredients.filter((el) => el.type === 'bun')
   }
 )
 
 export const saucesIngredientsFind = createSelector(
-  [ingredientsState],
+  [getIngredientsState],
   (ingredients) => {
     return ingredients.filter((el) => el.type === 'sauce')
   }
 )
 
 export const mainsIngredientsFind = createSelector(
-  [ingredientsState],
+  [getIngredientsState],
   (ingredients) => {
     return ingredients.filter((el) => el.type === 'main')
   }
 )
 
-export const getIngredientsState = (state) => state.burgerIngredients.ingredients;
 
-export const getBurgerConstructor = (state) => state.burgerConstructor;
 
-export const getStatus = (state) => state.burgerIngredients;
 
 
 export default ingredientsSlice.reducer

@@ -14,10 +14,23 @@ export const getOrder = createAsyncThunk(
 );
 
 
+export const getOrderImageDetails = createAsyncThunk(
+  'order/orderImageDetails',
+  async function (orderNumber, { rejectWithValue }) {
+    try {
+      const { orders } = await api.orderImageDetails(orderNumber);
+      return { orders }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const orderDetailsSlice = createSlice({
   name: 'order',
   initialState: {
     orderDetails: {},
+    orderImageDetails: [],
     orderDetailsRequest: false,
     orderDetailsFailed: false,
   },
@@ -35,7 +48,21 @@ const orderDetailsSlice = createSlice({
       state.orderDetailsRequest = false;
       state.orderDetailsFailed = false
       state.orderDetails = action.payload;
+    },
 
+    [getOrderImageDetails.pending]: (state) => {
+      state.orderDetailsRequest = true;
+    },
+
+    [getOrderImageDetails.rejected]: (state, action) => {
+      state.orderDetailsRequest = false;
+      state.orderDetailsFailed = action.payload
+    },
+
+    [getOrderImageDetails.fulfilled]: (state, action) => {
+      state.orderDetailsRequest = false;
+      state.orderDetailsFailed = false
+      state.orderImageDetails = action.payload.orders;
     }
   }
 })
@@ -44,6 +71,8 @@ const orderDetailsSlice = createSlice({
 
 
 export default orderDetailsSlice.reducer
+
+export const orderImageDetailsStore = (store => store.orderDetails.orderImageDetails)
 
 export const orderDetailsStore = (store => store.orderDetails.orderDetails)
 

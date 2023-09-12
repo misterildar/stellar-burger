@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styles from './card.module.css';
-import {
-  CurrencyIcon,
-  Counter,
-} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  CurrencyIcon,
+  Counter,
+} from '@ya.praktikum/react-developer-burger-ui-components';
 import { counterIngredientsFind } from '../../../services/store/constructorSlice';
 
 export const Card = ({ listIngredients }) => {
@@ -34,7 +34,7 @@ export const Card = ({ listIngredients }) => {
   return (
     <Link
       key={ingredientId}
-      to={`/ingredient/${ingredientId}`}
+      to={`ingredients/${ingredientId}`}
       state={{ background: location }}
       className={`${styles.list} pb-8 pr-6 `}
     >

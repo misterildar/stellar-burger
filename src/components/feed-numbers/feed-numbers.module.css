@@ -1,0 +1,12 @@
+.finish_working {
+  display: flex;
+  column-gap: 80px;
+  padding-bottom: 60px;
+  max-height: 280px;
+  overflow: hidden;
+  margin-bottom: 60px;
+}
+
+.color {
+  color: #00cccc;
+}

@@ -2,11 +2,12 @@ import React from 'react';
 import FeedItemNumbers from '../feed-item-numbers/feed-item-numbers';
 import styles from './feed-numbers.module.css';
 
-const FeedNumbers = ({ total, totalToday }) => {
-  const finish = ['034533', '034534', '034535', '034536', '034537'];
-  //TODO заменить статичные данные
-  const working = ['034545', '034546', '034547'];
 
+const FeedNumbers = ({ total, totalToday, orderData }) => {
+  const finish = orderData.orders.filter((el) => el.status === 'done');
+
+  const working = orderData.orders.filter((el) => el.status === 'created');
+  
   return (
     <div>
       <div className={styles.finish_working}>
@@ -17,7 +18,8 @@ const FeedNumbers = ({ total, totalToday }) => {
                 className={`text text_type_digits-default ${styles.color}`}
                 key={el}
               >
-                {el}
+                {el.number}
+
               </div>
             );
           })}
@@ -27,13 +29,12 @@ const FeedNumbers = ({ total, totalToday }) => {
           {working.map((el) => {
             return (
               <div className={'text text_type_digits-default'} key={el}>
-                {el}
+                {el.number}
               </div>
             );
           })}
         </FeedItemNumbers>
       </div>
-
       <FeedItemNumbers
         text={'Выполнено за все время:'}
         classNumber={'text text_type_digits-large pb-15'}
