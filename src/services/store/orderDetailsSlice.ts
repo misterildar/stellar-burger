@@ -1,10 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
 import { TorderDetailsSlice } from '../../utils/types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getOrder = createAsyncThunk<any, any>(
+export const getOrder = createAsyncThunk(
   'order/getOrder',
-  async function (orderIngredientId, { rejectWithValue }) {
+  async function (orderIngredientId: string[], { rejectWithValue }) {
     try {
       const { order } = await api.numberOrders(orderIngredientId);
       return { order };
@@ -14,9 +14,9 @@ export const getOrder = createAsyncThunk<any, any>(
   }
 );
 
-export const getOrderImageDetails = createAsyncThunk<any, any>(
+export const getOrderImageDetails = createAsyncThunk(
   'order/orderImageDetails',
-  async function (orderNumber, { rejectWithValue }) {
+  async function (orderNumber: string | undefined, { rejectWithValue }) {
     try {
       const { orders } = await api.orderImageDetails(orderNumber);
       return { orders };

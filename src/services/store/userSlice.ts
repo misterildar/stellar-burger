@@ -1,10 +1,10 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
-import { TuserSlice } from '../../utils/types';
+import { TuserSlice, TUser } from '../../utils/types';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const registerUser = createAsyncThunk<any, any>(
+export const registerUser = createAsyncThunk(
   'user/register',
-  async function (body, { rejectWithValue }) {
+  async function (body: TUser, { rejectWithValue }) {
     try {
       const res = await api.getRegister('auth/register', body);
       localStorage.setItem('accessToken', res.accessToken);
@@ -15,9 +15,9 @@ export const registerUser = createAsyncThunk<any, any>(
     }
   }
 );
-export const loginUser = createAsyncThunk<any, any>(
+export const loginUser = createAsyncThunk(
   'user/login',
-  async function (body, { rejectWithValue }) {
+  async function (body: TUser, { rejectWithValue }) {
     try {
       const res = await api.getLogin('auth/login', body);
       localStorage.setItem('accessToken', res.accessToken);
@@ -30,7 +30,7 @@ export const loginUser = createAsyncThunk<any, any>(
   }
 );
 
-export const logOutUser = createAsyncThunk<any>(
+export const logOutUser = createAsyncThunk(
   'user/logout',
   async function (_, { rejectWithValue }) {
     try {
@@ -44,7 +44,7 @@ export const logOutUser = createAsyncThunk<any>(
   }
 );
 
-export const ubdateTokenUser = createAsyncThunk<any>(
+export const ubdateTokenUser = createAsyncThunk(
   'user/token',
   async function (_, { rejectWithValue }) {
     try {
@@ -56,9 +56,9 @@ export const ubdateTokenUser = createAsyncThunk<any>(
   }
 );
 
-export const forgotPasswordUser = createAsyncThunk<any, any>(
+export const forgotPasswordUser = createAsyncThunk(
   'user/forgotPassword',
-  async function (email, { rejectWithValue }) {
+  async function (email: string, { rejectWithValue }) {
     try {
       const data = await api.getForgotPassword(email);
       return data;
@@ -68,9 +68,9 @@ export const forgotPasswordUser = createAsyncThunk<any, any>(
   }
 );
 
-export const resetPasswordUser = createAsyncThunk<any, any>(
+export const resetPasswordUser = createAsyncThunk(
   'user/resetPassword',
-  async function (body, { rejectWithValue }) {
+  async function (body: TUser, { rejectWithValue }) {
     try {
       const data = await api.getReserPassword(body);
       return data;
@@ -80,7 +80,7 @@ export const resetPasswordUser = createAsyncThunk<any, any>(
   }
 );
 
-export const getUser = createAsyncThunk<any>(
+export const getUser = createAsyncThunk(
   'user/getUser',
   async function (_, { rejectWithValue }) {
     try {
@@ -92,9 +92,11 @@ export const getUser = createAsyncThunk<any>(
   }
 );
 
-export const updateUser = createAsyncThunk<any, any>(
+export const updateUser = createAsyncThunk(
   'user/updateUser',
-  async function (form, { rejectWithValue }) {
+  async function (form: TUser, { rejectWithValue }) {
+    console.log(form);
+
     try {
       const data = await api.getUpdateUserData(form);
       return data;
@@ -226,8 +228,8 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.isRequest = false;
         state.isFailed = false;
-        state.email = action.payload.user.email;
-        state.name = action.payload.user.name;
+        state.email = action.payload.user?.email;
+        state.name = action.payload.user?.name;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.isAuthChecked = true;

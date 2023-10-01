@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent } from 'react';
 import Form from '../components/form/form';
 import { routes } from '../utils/constants';
 import { useForm } from '../hooks/use-form';
@@ -17,7 +17,7 @@ const Login: FC = () => {
     password: '',
   });
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(loginUser(values));
   };

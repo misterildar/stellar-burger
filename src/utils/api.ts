@@ -1,6 +1,10 @@
-import { setAuthChecked, setUser } from '../services/store/userSlice';
-import { ubdateTokenUser } from '../services/store/userSlice';
-import { getUser } from '../services/store/userSlice';
+import { TUser } from './types';
+import {
+  setAuthChecked,
+  setUser,
+  ubdateTokenUser,
+  getUser,
+} from '../services/store/userSlice';
 
 const baseUrl: string = 'https://norma.nomoreparties.space/api/';
 
@@ -14,7 +18,7 @@ const getInitialIngredients = () => {
   return fetch(`${baseUrl}ingredients`).then(checkErrorPromise);
 };
 
-const numberOrders = (arrayIdOrder: any) => {
+const numberOrders = (arrayIdOrder: string[]) => {
   return fetch(`${baseUrl}orders`, {
     method: 'POST',
     headers: {
@@ -27,7 +31,7 @@ const numberOrders = (arrayIdOrder: any) => {
   }).then(checkErrorPromise);
 };
 
-const orderImageDetails = (orderNumber: any) => {
+const orderImageDetails = (orderNumber: string | undefined) => {
   return fetch(`${baseUrl}orders/${orderNumber}`).then(checkErrorPromise);
 };
 
@@ -43,7 +47,7 @@ const getLogOut = () => {
   }).then(checkErrorPromise);
 };
 
-const getRegister = (url: any, bodyData: any) => {
+const getRegister = (url: string, bodyData: TUser) => {
   return fetch(`${baseUrl}${url}`, {
     method: 'POST',
     headers: {
@@ -54,7 +58,7 @@ const getRegister = (url: any, bodyData: any) => {
   }).then(checkErrorPromise);
 };
 
-const getLogin = (url: any, bodyData: any) => {
+const getLogin = (url: string, bodyData: TUser) => {
   return fetch(`${baseUrl}${url}`, {
     method: 'POST',
     headers: {
@@ -94,7 +98,7 @@ const refreshToken = () => {
   }).then(checkErrorPromise);
 };
 
-const fetchWithRefresh = async (url: any, options: any) => {
+const fetchWithRefresh = async (url: string, options: any) => {
   try {
     const res = await fetch(url, options);
     return await checkErrorPromise(res);
@@ -124,7 +128,7 @@ const getUpdateToken = () => {
   }).then(checkErrorPromise);
 };
 
-const getForgotPassword = (mail: any) => {
+const getForgotPassword = (mail: string) => {
   return fetch(`${baseUrl}password-reset`, {
     method: 'POST',
     headers: {
@@ -136,7 +140,7 @@ const getForgotPassword = (mail: any) => {
   }).then(checkErrorPromise);
 };
 
-const getReserPassword = (form: any) => {
+const getReserPassword = (form: TUser) => {
   return fetch(`${baseUrl}password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -162,7 +166,7 @@ const getUserData = () => {
   });
 };
 
-const getUpdateUserData = (bodyData: any) => {
+const getUpdateUserData = (bodyData: TUser) => {
   return fetchWithRefresh(`${baseUrl}auth/user`, {
     method: 'PATCH',
     headers: {

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent } from 'react';
 import Form from '../components/form/form';
 import { routes } from '../utils/constants';
 import { useAppDispatch } from '../hooks/hooks';
@@ -22,7 +22,7 @@ const Register: FC = () => {
     password: '',
   });
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(registerUser(values));
     navigate(routes.login);
@@ -36,8 +36,6 @@ const Register: FC = () => {
       linkText='Войти'
       linkPageTo={routes.login}
       onSubmit={handleSubmit}
-      //TODO
-      // onChange={handleChange}
       nextLinkPageTo=''
     >
       <Input

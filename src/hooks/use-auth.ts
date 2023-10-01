@@ -9,9 +9,6 @@ export const useAuth = () => {
     accessToken,
     refreshToken,
     isAuthChecked,
-    //TODO
-    // userRegisterFailed,
-    // userRegisterRequest,
     isForgotPasswordRequest,
   } = useAppSelector((state) => state.user);
 
@@ -23,9 +20,6 @@ export const useAuth = () => {
     accessToken,
     refreshToken,
     isAuthChecked,
-    //TODO
-    // userRegisterFailed,
-    // userRegisterRequest,
     isForgotPasswordRequest,
   };
 };

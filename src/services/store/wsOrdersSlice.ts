@@ -1,7 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
-import { createReducer } from '@reduxjs/toolkit';
-import { WebsocketStatus } from '../../utils/constants';
 import { TwsOrderSlice } from '../../utils/types';
+import { WebsocketStatus } from '../../utils/constants';
+import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export const connect = createAction<string>('ORDERS_CONNECT');
 export const disconnect = createAction<string>('ORDERS_DISCONNECT');
@@ -13,7 +12,7 @@ export const wsError = createAction<string>('ORDERS_WS_ERROR');
 
 const initialState: TwsOrderSlice = {
   status: WebsocketStatus.OFFLINE,
-  orders: [],
+  order: null,
   connectingError: '',
 };
 
@@ -34,8 +33,6 @@ export const wsOrderSlice = createReducer(initialState, (builder) => {
       state.connectingError = action.payload;
     })
     .addCase(wsMessage, (state, action: any) => {
-      if (action.payload.success && action.payload.orders.length > 0) {
-        state.orders = action.payload;
-      }
+      state.order = action.payload;
     });
 });

@@ -28,7 +28,7 @@ const IngredientsBox: FC<IIngredientsBox> = ({ el, index, moveListItem }) => {
 
   const [, dropRef] = useDrop({
     accept: 'item',
-    hover: (item: any, monitor: any) => {
+    hover: (item: { [index: string]: number }, monitor: any) => {
       const dragIndex = item.index;
       const hoverIndex = index;
       const hoverBoundingRect = ref.current?.getBoundingClientRect();

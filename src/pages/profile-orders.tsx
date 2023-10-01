@@ -4,12 +4,13 @@ import {
   connectProfile,
   disconnectProfile,
 } from '../services/store/wsProfileOrdersSlice';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
+import { TCardOrder } from '../utils/types';
 import styles from './page-style.module.css';
 import Loader from '../components/loader/loader';
 import { Modal } from '../components/modal/modal';
 import { WS_ORDERS_PROFILE_URL } from '../utils/constants';
 import CardOrder from '../components/card-order/card-order';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 
 const ProfileHistoryOrders: FC = () => {
   const dispatch = useAppDispatch();
@@ -23,16 +24,16 @@ const ProfileHistoryOrders: FC = () => {
     };
   }, [dispatch, token]);
 
-  const { orders, status } = useAppSelector((state) => state.wsProfileOrder);
+  const { order, status } = useAppSelector((state) => state.wsProfileOrder);
 
-  const showOrder = status === 'ONLINE' && orders.success === true;
+  const showOrder = status === 'ONLINE' && order?.success === true;
 
-  const isNoOrders = status === 'ONLINE' && orders.length === 0;
+  const isNoOrders = status === 'ONLINE' && order?.length === 0;
 
   return showOrder ? (
     <div className={styles.profile_order}>
       <div className={`${styles.profile_card_box} custom-scroll`}>
-        {orders.orders.toReversed().map((el: any) => (
+        {order.orders?.toReversed().map((el: TCardOrder) => (
           <CardOrder orderData={el} key={el._id} isStatus={true} />
         ))}
       </div>

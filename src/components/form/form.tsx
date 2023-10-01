@@ -7,8 +7,6 @@ interface IForm {
   title?: string;
   buttonText?: string | boolean;
   onSubmit?: (() => void) | ((e: React.FormEvent<HTMLFormElement>) => void);
-  //TODO
-  // onChange?: any;
   children?: ReactNode;
   question?: string;
   nextQuestion?: string | boolean;

@@ -1,7 +1,6 @@
-import { createAction } from '@reduxjs/toolkit';
-import { createReducer } from '@reduxjs/toolkit';
-import { WebsocketStatus } from '../../utils/constants';
 import { TwsOrderSlice } from '../../utils/types';
+import { WebsocketStatus } from '../../utils/constants';
+import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export const connectProfile = createAction<string>('PROFILE_ORDERS_CONNECT');
 export const disconnectProfile = createAction<string>(
@@ -19,7 +18,7 @@ export const wsErrorProfile = createAction<string>('PROFILE_ORDERS_WS_ERROR');
 
 const initialState: TwsOrderSlice = {
   status: WebsocketStatus.OFFLINE,
-  orders: [],
+  order: null,
   connectingError: '',
 };
 
@@ -39,8 +38,6 @@ export const wsProfileOrderSlice = createReducer(initialState, (builder) => {
       state.connectingError = action.payload;
     })
     .addCase(wsMessageProfile, (state, action: any) => {
-      if (action.payload.success && action.payload.orders.length > 0) {
-        state.orders = action.payload;
-      }
+      state.order = action.payload;
     });
 });

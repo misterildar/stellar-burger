@@ -1,5 +1,6 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '..';
 import { TconstructorSlice } from '../../utils/types';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 
 const initialState: TconstructorSlice = {
   ingredientBurger: [],
@@ -36,17 +37,17 @@ const constructorSlice = createSlice({
   },
 });
 
-const getBurgerIngredient = (state: any) =>
+const getBurgerIngredient = (state: RootState) =>
   state.burgerConstructor.ingredientBurger;
 
-const getBun = (state: any) => state.burgerConstructor.bun;
+const getBun = (state: RootState) => state.burgerConstructor.bun;
 
 export const counterIngredientsFind = createSelector(
   [getBurgerIngredient, getBun],
   (ingredientBurger, bun) => {
-    const counter: any = {};
-    ingredientBurger.forEach((el: any) => {
-      if (!counter[el._id]) counter[el._id] = null;
+    const counter: { [counter: string]: number } = {};
+    ingredientBurger.forEach((el) => {
+      if (!counter[el._id]) counter[el._id] = 0;
       counter[el._id] += 1;
     });
     if (bun) {
@@ -63,7 +64,7 @@ export const bunFind = createSelector([getBun], (bun) => {
 export const saucesAndMainsFind = createSelector(
   [getBurgerIngredient],
   (ingredientBurger) => {
-    return ingredientBurger.filter((el: any) => el.type !== 'bun');
+    return ingredientBurger.filter((el) => el.type !== 'bun');
   }
 );
 
@@ -71,7 +72,7 @@ export const totalPriceFind = createSelector(
   [getBurgerIngredient, getBun],
   (ingredientBurger, bun) => {
     const sumIngredient = ingredientBurger.reduce(
-      (acc: any, price: any) => acc + price.price,
+      (acc, price) => acc + price.price,
       0
     );
     const sumBun = bun ? bun.price * 2 : 0;
@@ -83,7 +84,7 @@ export const orderIngredientIdFind = createSelector(
   [getBurgerIngredient, getBun],
   (ingredientBurger, bun) => {
     const ingredientId = [];
-    ingredientBurger.forEach((el: any) => ingredientId.push(el._id));
+    ingredientBurger.forEach((el) => ingredientId.push(el._id));
     if (bun) {
       ingredientId.push(bun._id);
     }
@@ -91,13 +92,14 @@ export const orderIngredientIdFind = createSelector(
   }
 );
 
-const countState = (state: any) => state.burgerIngredients.ingredients;
+const countState = (state: RootState) => state.burgerIngredients.ingredients;
 
-const getBunCountFind = (state: any) => state.burgerConstructor.bun;
+const getBunCountFind = (state: RootState) => state.burgerConstructor.bun;
 
-export const getBurgerConstructor = (state: any) => state.burgerConstructor;
+export const getBurgerConstructor = (state: RootState) =>
+  state.burgerConstructor;
 
-export const getMoveIngredientsState = (state: any) =>
+export const getMoveIngredientsState = (state: RootState) =>
   state.burgerConstructor.ingredientBurger;
 
 export const bunCountFind = createSelector(
@@ -105,10 +107,7 @@ export const bunCountFind = createSelector(
   (ingredients, bun) => {
     if (bun === null) {
       return;
-    } else if (
-      bun !== null &&
-      ingredients.filter((el: any) => el._id === bun._id)
-    ) {
+    } else if (bun !== null && ingredients.filter((el) => el._id === bun._id)) {
       return bun._id;
     }
   }

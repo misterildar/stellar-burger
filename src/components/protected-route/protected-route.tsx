@@ -9,8 +9,6 @@ interface IProtected {
 }
 
 const Protected: FC<IProtected> = ({ onlyUnAuth = false, component }) => {
-
-
   const { user, isAuthChecked } = useAuth();
 
   const location = useLocation();

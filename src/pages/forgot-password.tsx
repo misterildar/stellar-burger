@@ -1,9 +1,9 @@
-import React, { useState, FC, FormEvent, ChangeEvent } from 'react';
 import Form from '../components/form/form';
 import { routes } from '../utils/constants';
 import { useAppDispatch } from '../hooks/hooks';
 import { useNavigate } from 'react-router-dom';
 import { forgotPasswordUser } from '../services/store/userSlice';
+import React, { useState, FC, FormEvent, ChangeEvent } from 'react';
 import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ForgotPassword: FC = () => {

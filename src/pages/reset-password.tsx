@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent } from 'react';
 import Form from '../components/form/form';
 import { useAuth } from '../hooks/use-auth';
 import { useForm } from '../hooks/use-form';
@@ -21,7 +21,7 @@ const ResetPassword: FC = () => {
 
   const { isForgotPasswordRequest } = useAuth();
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(resetPasswordUser(values));
   }

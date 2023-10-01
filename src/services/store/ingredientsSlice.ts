@@ -4,9 +4,9 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import { api } from '../../utils/api';
-import { TingredientsSlice } from '../../utils/types';
+import { TingredientsSlice, TIngredient } from '../../utils/types';
 
-export const getIngredients = createAsyncThunk<any>(
+export const getIngredients = createAsyncThunk(
   'ingredients/getIngredients',
   async function (_, { rejectWithValue }) {
     try {
@@ -44,7 +44,7 @@ const ingredientsSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(getIngredients.fulfilled, (state, action) => {
+      .addCase(getIngredients.fulfilled, (state, action: any) => {
         state.loading = null;
         if (action.payload.data.length > 0) {
           state.ingredients = action.payload.data;
@@ -63,21 +63,21 @@ export const getStatus = (state: any) => state.burgerIngredients;
 export const bunsIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: any) => el.type === 'bun');
+    return ingredients.filter((el: TIngredient) => el.type === 'bun');
   }
 );
 
 export const saucesIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: any) => el.type === 'sauce');
+    return ingredients.filter((el: TIngredient) => el.type === 'sauce');
   }
 );
 
 export const mainsIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: any) => el.type === 'main');
+    return ingredients.filter((el: TIngredient) => el.type === 'main');
   }
 );
 

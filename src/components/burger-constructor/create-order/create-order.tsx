@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { routes } from '../../../utils/constants';
 import { useAuth } from '../../../hooks/use-auth';
 import { TCreateOrder } from '../../../utils/types';
-import { OrderDetails } from '../order-details/order-details';
 import {
   Button,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { OrderDetails } from '../order-details/order-details';
 import { getOrder } from '../../../services/store/orderDetailsSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 import { clearIngredients } from '../../../services/store/constructorSlice';

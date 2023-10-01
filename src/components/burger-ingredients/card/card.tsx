@@ -21,9 +21,7 @@ export const Card: FC<ICard> = ({ listIngredients }) => {
 
   const { image, name, price, key } = listIngredients;
 
-  const counterIngredients: { [count: string]: number } = useAppSelector(
-    counterIngredientsFind
-  );
+  const counterIngredients = useAppSelector(counterIngredientsFind);
 
   const count: number = counterIngredients[listIngredients._id];
 

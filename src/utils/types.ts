@@ -18,9 +18,9 @@ export type TIngredient = {
 };
 
 export type TAppHeaderItem = {
-  readonly title: string;
-  readonly children: ReactNode;
-  readonly link: string;
+  title: string;
+  children: ReactNode;
+  link: string;
 };
 
 export type TCardOrder = {
@@ -31,14 +31,20 @@ export type TCardOrder = {
   createdAt: string;
   updatedAt: string;
   number: number;
-  filter: any;
+  owner?: string;
+  filter?: any;
+  map?: any;
+  toReversed?: any;
 };
 
 export type TFeedNumbers = {
-  success: boolean;
-  orders: TCardOrder;
+  success: boolean | string;
+  orders: TCardOrder | null;
   total: number;
   totalToday: number;
+  status?: string;
+  connectingError?: string;
+  length?: any;
 };
 
 export type TconstructorSlice = {
@@ -52,54 +58,51 @@ export type TingredientsSlice = {
   error: any;
 };
 
-export type TorderDetailsSlice = {
-  //TODO change
-  orderDetails: {};
-  orderImageDetails: [];
-  orderDetailsRequest: any;
-  orderDetailsFailed: any;
+export type TOrder = {
+  orders: TCardOrder;
 };
 
-//TODO change
+export type TorderDetailsSlice = {
+  orderDetails: TOrder | {};
+  orderImageDetails: TOrder | [];
+  orderDetailsRequest: boolean | string;
+  orderDetailsFailed: boolean | string | unknown;
+};
+
 export type TuserSlice = {
-  user: any;
-  email: any;
-  name: any;
-  password: any;
+  user: boolean | null;
+  email: string | null;
+  name: string | null;
+  password: string;
 
-  accessToken: any;
-  refreshToken: any;
+  accessToken: string | null;
+  refreshToken: string | null;
 
-  isRequest: any;
-  isFailed: any;
+  isRequest: boolean | string;
+  isFailed: boolean | string | unknown;
 
-  isAuthChecked: any;
+  isAuthChecked: boolean | string;
   isForgotPasswordRequest: boolean;
 };
 
 export type TwsOrderSlice = {
   status: string;
-  orders: any;
-  connectingError: string | undefined;
+  order: TFeedNumbers | null;
+  connectingError: string;
 };
 
-//TODO
-// export type TwsActions = {
-//   wsConnect: string;
-//   wsSendMessage: string;
-//   onOpen: string;
-//   onClose: string;
-//   onError: string;
-//   onMessage: string;
-//   wsConnecting: string;
-//   wsDisconnect: string;
-// };
-
 export type TCreateOrder = {
-  readonly totalPrice: number;
-  readonly orderIngredientId: string[];
+  totalPrice: number;
+  orderIngredientId: string[];
 };
 
 export type TonClose = {
   onClose: () => void;
+};
+
+export type TUser = {
+  name?: string;
+  email?: string;
+  password?: string;
+  code?: string;
 };

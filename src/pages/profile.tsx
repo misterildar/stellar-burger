@@ -1,4 +1,10 @@
-import React, { useEffect, useState, FC } from 'react';
+import React, {
+  useEffect,
+  useState,
+  FC,
+  FormEvent,
+  SyntheticEvent,
+} from 'react';
 import {
   Input,
   Button,
@@ -6,11 +12,11 @@ import {
   PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updateUser } from '../services/store/userSlice';
+import { useAppDispatch } from '../hooks/hooks';
 import { useAuth } from '../hooks/use-auth';
 import { useForm } from '../hooks/use-form';
 import styles from './page-style.module.css';
 import Form from '../components/form/form';
-import { useAppDispatch } from '../hooks/hooks';
 
 const ProfileDataChange: FC = () => {
   const user = useAuth();
@@ -33,13 +39,13 @@ const ProfileDataChange: FC = () => {
     setIsButton(isForm);
   }, [values]);
 
-  function handleSubmit(e: any) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     dispatch(updateUser(values));
     setIsButton(false);
   }
 
-  function back(e: any) {
+  function back(e: SyntheticEvent<Element, Event>) {
     e.preventDefault();
     setIsButton(false);
     setValues({

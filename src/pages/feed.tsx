@@ -20,9 +20,9 @@ const Feed: FC = () => {
     };
   }, [dispatch]);
 
-  const { orders, status } = useAppSelector((state) => state.wsOrder);
+  const { order, status } = useAppSelector((state) => state.wsOrder);
 
-  const showOrder = status === 'ONLINE' && orders.success === true;
+  const showOrder = status === 'ONLINE' && order?.success === true;
 
   return showOrder ? (
     <div className={styles.feed_container}>
@@ -30,14 +30,14 @@ const Feed: FC = () => {
 
       <div className={styles.feed_box}>
         <div className={`${styles.feed_card_box} custom-scroll`}>
-          {orders?.orders?.map((el: TCardOrder) => (
+          {order?.orders?.map((el: TCardOrder) => (
             <CardOrder orderData={el} key={el._id} />
           ))}
         </div>
         <FeedNumbers
-          total={orders.total}
-          totalToday={orders.totalToday}
-          orderData={orders}
+          total={order.total}
+          totalToday={order.totalToday}
+          orderData={order}
         />
       </div>
     </div>

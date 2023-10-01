@@ -10,11 +10,11 @@ interface IFeedNumbers {
 }
 
 const FeedNumbers: FC<IFeedNumbers> = ({ total, totalToday, orderData }) => {
-  const finish = orderData.orders.filter(
+  const finish = orderData.orders?.filter(
     (el: TCardOrder) => el.status === 'done'
   );
 
-  const working = orderData.orders.filter(
+  const working = orderData.orders?.filter(
     (el: TCardOrder) => el.status === 'created'
   );
 
