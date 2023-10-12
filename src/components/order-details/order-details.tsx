@@ -33,7 +33,7 @@ const OrderDetails: FC = () => {
 
   const counter: { [count: string]: number } = {};
 
-  orderData?.ingredients.forEach((el: any) => {
+  orderData?.ingredients.forEach((el) => {
     if (!counter[el]) {
       counter[el] = 1;
     } else {
