@@ -1,6 +1,8 @@
 import { Middleware } from 'redux';
+import { RootState } from '../..';
+import { TsocketMiddleware } from '../../../utils/types';
 
-export const socketMiddleware = (wsActions: any): Middleware => {
+export const socketMiddleware = (wsActions: TsocketMiddleware): Middleware => {
   return (store) => {
     let socket: WebSocket | null = null;
 
@@ -9,7 +11,6 @@ export const socketMiddleware = (wsActions: any): Middleware => {
       const { type } = action;
       const {
         wsConnect,
-        wsSendMessage,
         onOpen,
         onClose,
         onError,
@@ -41,10 +42,6 @@ export const socketMiddleware = (wsActions: any): Middleware => {
         socket.onclose = () => {
           dispatch(onClose());
         };
-
-        if (wsSendMessage && type === wsSendMessage.type) {
-          socket.send(JSON.stringify(action.payload));
-        }
 
         if (wsDisconnect.type === type) {
           socket.close();

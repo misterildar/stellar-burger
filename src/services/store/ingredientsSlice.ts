@@ -3,19 +3,22 @@ import {
   createAsyncThunk,
   createSelector,
 } from '@reduxjs/toolkit';
+import { RootState } from '..';
 import { api } from '../../utils/api';
 import { TingredientsSlice, TIngredient } from '../../utils/types';
 
-export const getIngredients = createAsyncThunk(
+interface IgetIngredients {
+  success: boolean;
+  data: TIngredient[];
+}
+
+export const getIngredients = createAsyncThunk<IgetIngredients>(
   'ingredients/getIngredients',
   async function (_, { rejectWithValue }) {
     try {
-      const { data } = await api.getInitialIngredients();
-      if (data.length > 0) {
-        return { data };
-      }
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+      return await api.getInitialIngredients();
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -44,40 +47,41 @@ const ingredientsSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(getIngredients.fulfilled, (state, action: any) => {
+      .addCase(getIngredients.fulfilled, (state, action) => {
         state.loading = null;
-        if (action.payload.data.length > 0) {
-          state.ingredients = action.payload.data;
+        if (action.payload?.data.length > 0) {
+          state.ingredients = action.payload?.data;
         }
       });
   },
 });
 
-export const getIngredientsState = (state: any) =>
+export const getIngredientsState = (state: RootState) =>
   state.burgerIngredients.ingredients;
 
-export const getBurgerConstructor = (state: any) => state.burgerConstructor;
+export const getBurgerConstructor = (state: RootState) =>
+  state.burgerConstructor;
 
-export const getStatus = (state: any) => state.burgerIngredients;
+export const getStatus = (state: RootState) => state.burgerIngredients;
 
 export const bunsIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: TIngredient) => el.type === 'bun');
+    return ingredients?.filter((el) => el.type === 'bun');
   }
 );
 
 export const saucesIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: TIngredient) => el.type === 'sauce');
+    return ingredients?.filter((el) => el.type === 'sauce');
   }
 );
 
 export const mainsIngredientsFind = createSelector(
   [getIngredientsState],
   (ingredients) => {
-    return ingredients.filter((el: TIngredient) => el.type === 'main');
+    return ingredients?.filter((el) => el.type === 'main');
   }
 );
 

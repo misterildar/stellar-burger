@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import FeedItemNumbers from '../feed-item-numbers/feed-item-numbers';
 import styles from './feed-numbers.module.css';
-import { TFeedNumbers, TCardOrder } from '../../utils/types';
+import { TFeedNumbers } from '../../utils/types';
 
 interface IFeedNumbers {
   total: number;
@@ -10,19 +10,15 @@ interface IFeedNumbers {
 }
 
 const FeedNumbers: FC<IFeedNumbers> = ({ total, totalToday, orderData }) => {
-  const finish = orderData.orders?.filter(
-    (el: TCardOrder) => el.status === 'done'
-  );
+  const finish = orderData.orders?.filter((el) => el.status === 'done');
 
-  const working = orderData.orders?.filter(
-    (el: TCardOrder) => el.status === 'created'
-  );
+  const working = orderData.orders?.filter((el) => el.status === 'created');
 
   return (
     <div>
       <div className={styles.finish_working}>
         <FeedItemNumbers text='Готовы:'>
-          {finish.map((el: TCardOrder) => {
+          {finish.map((el) => {
             return (
               <div
                 className={`text text_type_digits-default ${styles.color}`}
@@ -35,7 +31,7 @@ const FeedNumbers: FC<IFeedNumbers> = ({ total, totalToday, orderData }) => {
         </FeedItemNumbers>
 
         <FeedItemNumbers text='В работе:'>
-          {working.map((el: TCardOrder) => {
+          {working.map((el) => {
             return (
               <div className={'text text_type_digits-default'} key={el._id}>
                 {el.number}

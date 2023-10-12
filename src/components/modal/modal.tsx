@@ -7,15 +7,15 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const modal = document.getElementById('modal') as HTMLElement;
 
 interface IModal {
-  onClose?: any;
+  onClose?: () => void;
   children?: ReactNode;
 }
 
-export const Modal: FC<IModal> = ({ onClose, children }) => {
+export const Modal = ({ onClose, children }: IModal) => {
   useEffect(() => {
     const closeEsc = (evt: { key: string }) => {
       if (evt.key === 'Escape') {
-        onClose();
+        if (onClose) onClose();
       }
     };
     document.addEventListener('keydown', closeEsc);

@@ -10,7 +10,7 @@ import {
 export const OrderDetails: FC = () => {
   const loader = useAppSelector(requestStore);
 
-  const { order } = useAppSelector(orderDetailsStore);
+  const order = useAppSelector(orderDetailsStore);
 
   return (
     <div className={`${styles.container} pt-30 pb-30`}>
@@ -21,7 +21,7 @@ export const OrderDetails: FC = () => {
       )}
       {!loader && (
         <>
-          <p className='text text_type_digits-large'>{order.number}</p>
+          <p className='text text_type_digits-large'>{order?.order?.number}</p>
           <p className='text text_type_main-medium pt-8 pb-15'>
             {'идентификатор заказа'}
           </p>

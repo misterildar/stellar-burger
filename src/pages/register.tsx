@@ -42,7 +42,7 @@ const Register: FC = () => {
         type={'text'}
         placeholder={'Имя'}
         onChange={handleChange}
-        value={values.name}
+        value={values.name ?? ''}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
@@ -52,13 +52,13 @@ const Register: FC = () => {
 
       <EmailInput
         onChange={handleChange}
-        value={values.email}
+        value={values.email ?? ''}
         name={'email'}
         isIcon={false}
       />
       <PasswordInput
         onChange={handleChange}
-        value={values.password}
+        value={values.password ?? ''}
         name={'password'}
         extraClass='mb-2'
       />

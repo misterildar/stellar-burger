@@ -10,8 +10,8 @@ export const registerUser = createAsyncThunk(
       localStorage.setItem('accessToken', res.accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       return res;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -23,9 +23,9 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem('accessToken', res.accessToken);
       localStorage.setItem('refreshToken', res.refreshToken);
       return res;
-    } catch (error: any) {
-      alert(error.message);
-      return rejectWithValue(error.message);
+    } catch (error) {
+      alert(error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -38,8 +38,8 @@ export const logOutUser = createAsyncThunk(
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -50,8 +50,8 @@ export const ubdateTokenUser = createAsyncThunk(
     try {
       const data = await api.getUpdateToken();
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -62,8 +62,8 @@ export const forgotPasswordUser = createAsyncThunk(
     try {
       const data = await api.getForgotPassword(email);
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -74,8 +74,8 @@ export const resetPasswordUser = createAsyncThunk(
     try {
       const data = await api.getReserPassword(body);
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -86,8 +86,8 @@ export const getUser = createAsyncThunk(
     try {
       const data = await api.getUserData();
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -100,8 +100,8 @@ export const updateUser = createAsyncThunk(
     try {
       const data = await api.getUpdateUserData(form);
       return data;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );

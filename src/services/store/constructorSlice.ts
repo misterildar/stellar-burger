@@ -107,7 +107,10 @@ export const bunCountFind = createSelector(
   (ingredients, bun) => {
     if (bun === null) {
       return;
-    } else if (bun !== null && ingredients.filter((el) => el._id === bun._id)) {
+    } else if (
+      bun !== null &&
+      ingredients?.filter((el) => el._id === bun._id)
+    ) {
       return bun._id;
     }
   }

@@ -6,12 +6,12 @@ import { TIngredient } from '../../../utils/types';
 interface IContainer {
   id: string;
   title: string;
-  ref: any;
+  ref: Ref<HTMLDivElement>;
   ingredients: TIngredient[];
 }
 
 export const IngredientsContainer: FC<IContainer> = React.forwardRef(
-  (props, ref: Ref<HTMLDivElement>) => {
+  (props, ref) => {
     return (
       <div>
         <h2

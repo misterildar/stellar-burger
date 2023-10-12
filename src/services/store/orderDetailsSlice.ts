@@ -1,15 +1,20 @@
+import { RootState } from '..';
 import { api } from '../../utils/api';
+import { PayloadAction } from '@reduxjs/toolkit';
 import { TorderDetailsSlice } from '../../utils/types';
+import { TOrderDetails, TOrder } from '../../utils/types';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getOrder = createAsyncThunk(
   'order/getOrder',
   async function (orderIngredientId: string[], { rejectWithValue }) {
     try {
-      const { order } = await api.numberOrders(orderIngredientId);
+      const { order }: TOrderDetails = await api.numberOrders(
+        orderIngredientId
+      );
       return { order };
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -27,8 +32,8 @@ export const getOrderImageDetails = createAsyncThunk(
 );
 
 const initialState: TorderDetailsSlice = {
-  orderDetails: {},
-  orderImageDetails: [],
+  orderDetails: null,
+  orderImageDetails: null,
   orderDetailsRequest: false,
   orderDetailsFailed: false,
 };
@@ -65,21 +70,24 @@ const orderDetailsSlice = createSlice({
         state.orderDetailsFailed = action.payload;
       })
 
-      .addCase(getOrderImageDetails.fulfilled, (state, action) => {
-        state.orderDetailsRequest = false;
-        state.orderDetailsFailed = false;
-        state.orderImageDetails = action.payload.orders;
-      });
+      .addCase(
+        getOrderImageDetails.fulfilled,
+        (state, action: PayloadAction<TOrder>) => {
+          state.orderDetailsRequest = false;
+          state.orderDetailsFailed = false;
+          state.orderImageDetails = action.payload;
+        }
+      );
   },
 });
 
 export default orderDetailsSlice.reducer;
 
-export const orderImageDetailsStore = (store: any) =>
+export const orderImageDetailsStore = (store: RootState) =>
   store.orderDetails.orderImageDetails;
 
-export const orderDetailsStore = (store: any) =>
+export const orderDetailsStore = (store: RootState) =>
   store.orderDetails.orderDetails;
 
-export const requestStore = (store: any) =>
+export const requestStore = (store: RootState) =>
   store.orderDetails.orderDetailsRequest;

@@ -1,6 +1,5 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
-import { TIngredient } from '../../../utils/types';
 import styles from './ingredient-details.module.css';
 import { useAppSelector } from '../../../hooks/hooks';
 import { getIngredientsState } from '../../../services/store/ingredientsSlice';
@@ -10,8 +9,8 @@ export const IngredientDetails: FC = () => {
 
   const ingredientsState = useAppSelector(getIngredientsState);
 
-  const ingredient = ingredientsState.find(
-    (item: TIngredient) => item._id === ingredientId
+  const ingredient = ingredientsState?.find(
+    (item) => item._id === ingredientId
   );
 
   return ingredient ? (

@@ -4,7 +4,6 @@ import {
   connectProfile,
   disconnectProfile,
 } from '../services/store/wsProfileOrdersSlice';
-import { TCardOrder } from '../utils/types';
 import styles from './page-style.module.css';
 import Loader from '../components/loader/loader';
 import { Modal } from '../components/modal/modal';
@@ -20,7 +19,7 @@ const ProfileHistoryOrders: FC = () => {
   useEffect(() => {
     dispatch(connectProfile(`${WS_ORDERS_PROFILE_URL}?token=${token}`));
     return () => {
-      dispatch(disconnectProfile('PROFILE_ORDERS_DISCONNECT'));
+      dispatch(disconnectProfile());
     };
   }, [dispatch, token]);
 
@@ -28,14 +27,16 @@ const ProfileHistoryOrders: FC = () => {
 
   const showOrder = status === 'ONLINE' && order?.success === true;
 
-  const isNoOrders = status === 'ONLINE' && order?.length === 0;
+  const isNoOrders = status === 'ONLINE' && order?.orders.length === 0;
 
   return showOrder ? (
     <div className={styles.profile_order}>
       <div className={`${styles.profile_card_box} custom-scroll`}>
-        {order.orders?.toReversed().map((el: TCardOrder) => (
-          <CardOrder orderData={el} key={el._id} isStatus={true} />
-        ))}
+        {order.orders
+          ?.map((el) => (
+            <CardOrder orderData={el} key={el._id} isStatus={true} />
+          ))
+          .reverse()}
       </div>
     </div>
   ) : isNoOrders ? (

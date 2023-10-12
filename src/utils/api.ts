@@ -5,13 +5,12 @@ import {
   ubdateTokenUser,
   getUser,
 } from '../services/store/userSlice';
+import { AppDispatch } from './types';
 
 const baseUrl: string = 'https://norma.nomoreparties.space/api/';
 
-const checkErrorPromise = (res: any) => {
-  return res.ok
-    ? res.json()
-    : res.json().then((err: any) => Promise.reject(err));
+const checkErrorPromise = (res: Response) => {
+  return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 const getInitialIngredients = () => {
@@ -70,7 +69,7 @@ const getLogin = (url: string, bodyData: TUser) => {
 };
 
 const checkUserAuth = () => {
-  return (dispatch: any) => {
+  return (dispatch: AppDispatch) => {
     if (localStorage.getItem('accessToken')) {
       dispatch(getUser());
       dispatch(ubdateTokenUser())
@@ -98,12 +97,12 @@ const refreshToken = () => {
   }).then(checkErrorPromise);
 };
 
-const fetchWithRefresh = async (url: string, options: any) => {
+const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
     return await checkErrorPromise(res);
-  } catch (err: any) {
-    if (err.message === 'jwt expired') {
+  } catch (err) {
+    if ((err as Error).message === 'jwt expired') {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
@@ -160,7 +159,7 @@ const getUserData = () => {
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
   }).then((res) => {
     return res.success ? res.user : '';
   });
@@ -172,7 +171,7 @@ const getUpdateUserData = (bodyData: TUser) => {
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       authorization: localStorage.getItem('accessToken'),
-    },
+    } as HeadersInit,
     body: JSON.stringify(bodyData),
   }).then((res) => {
     return res.success ? res.user : '';

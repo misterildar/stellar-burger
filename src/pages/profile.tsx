@@ -62,7 +62,7 @@ const ProfileDataChange: FC = () => {
         placeholder={'Имя'}
         onChange={handleChange}
         icon='EditIcon'
-        value={values.name}
+        value={values.name ?? ''}
         name={'name'}
         error={false}
         errorText={'Ошибка'}
@@ -71,14 +71,14 @@ const ProfileDataChange: FC = () => {
       />
       <EmailInput
         onChange={handleChange}
-        value={values.email}
+        value={values.email ?? ''}
         name={'email'}
         placeholder='Логин'
         isIcon={true}
       />
       <PasswordInput
         onChange={handleChange}
-        value={values.password}
+        value={values.password ?? ''}
         name={'password'}
         icon='EditIcon'
         placeholder={'Пароль'}

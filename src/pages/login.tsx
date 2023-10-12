@@ -34,10 +34,14 @@ const Login: FC = () => {
       nextLinkPageTo={routes.forgotPassword}
       onSubmit={handleSubmit}
     >
-      <EmailInput onChange={handleChange} value={values.email} name={'email'} />
+      <EmailInput
+        onChange={handleChange}
+        value={values.email ?? ''}
+        name={'email'}
+      />
       <PasswordInput
         onChange={handleChange}
-        value={values.password}
+        value={values.password ?? ''}
         name={'password'}
         extraClass='mb-2'
       />

@@ -7,14 +7,14 @@ import {
 } from '../../services/store/orderDetailsSlice';
 import { useParams } from 'react-router-dom';
 import styles from './order-details.module.css';
+import { TCardOrder } from '../../utils/types';
+import { colorStatus } from '../../utils/functions';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { colorStatus } from '../../utils/functions';
 import { getIngredientsState } from '../../services/store/ingredientsSlice';
-import { TIngredient } from '../../utils/types';
 
 const OrderDetails: FC = () => {
   const { id } = useParams();
@@ -27,17 +27,13 @@ const OrderDetails: FC = () => {
 
   const ingredientsAll = useAppSelector(getIngredientsState);
 
-  const orderDataArr = useAppSelector(orderImageDetailsStore);
+  const orderDataArr: any = useAppSelector(orderImageDetailsStore); //TODO Здесь any
 
-  if (ingredientsAll.length === 0 && orderDataArr.length === 0) {
-    return null;
-  }
-
-  const orderData = orderDataArr[0];
+  const orderData: TCardOrder = orderDataArr?.orders[0]; // потому что тут ругается на [0]
 
   const counter: { [count: string]: number } = {};
 
-  orderData?.ingredients.forEach((el: string) => {
+  orderData?.ingredients.forEach((el) => {
     if (!counter[el]) {
       counter[el] = 1;
     } else {
@@ -46,26 +42,21 @@ const OrderDetails: FC = () => {
   });
 
   const orderIngredientData = orderData?.ingredients.map(
-    (id: string) =>
-      ingredientsAll?.filter((el: TIngredient) => el._id === id)[0]
+    (id) => ingredientsAll?.filter((el) => el._id === id)[0]
   );
 
   const orderIngredientsId = Array.from(new Set(orderData?.ingredients));
 
-  const ingredientsImageContainer = ingredientsAll.filter((el: TIngredient) =>
+  const ingredientsImageContainer = ingredientsAll?.filter((el) =>
     orderIngredientsId.includes(el._id)
   );
 
-  const bun = orderIngredientData?.filter(
-    (el: TIngredient) => el.type === 'bun'
-  )[0];
+  const bun = orderIngredientData?.filter((el) => el.type === 'bun')[0];
 
-  const saucesAndMains = orderIngredientData?.filter(
-    (el: TIngredient) => el.type !== 'bun'
-  );
+  const saucesAndMains = orderIngredientData?.filter((el) => el.type !== 'bun');
 
   const saucesAndMainsPrice = saucesAndMains?.reduce(
-    (acc: number, el: TIngredient) => acc + el.price,
+    (acc, el) => acc + el.price,
     0
   );
 
@@ -91,7 +82,7 @@ const OrderDetails: FC = () => {
       <p className='text text_type_main-medium m-0 pb-6'>Состав:</p>
       <div className={styles.image_container}>
         <div className={`${styles.image_price_box} custom-scroll`}>
-          {ingredientsImageContainer.map((el: TIngredient, index: number) => {
+          {ingredientsImageContainer?.map((el, index) => {
             return (
               <div className={styles.image_price} key={index}>
                 <div className={styles.image_name}>

@@ -1,13 +1,13 @@
-import React, { useRef, FC } from 'react';
+import { useDrop, useDrag } from 'react-dnd';
 import styles from './ingredients-box.module.css';
+import { TIngredient } from '../../../utils/types';
+import React, { useRef, FC, LegacyRef } from 'react';
+import { useAppDispatch } from '../../../hooks/hooks';
 import {
   DragIcon,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
-import { useDrop, useDrag } from 'react-dnd';
 import { deleteIngredient } from '../../../services/store/constructorSlice';
-import { TIngredient } from '../../../utils/types';
 
 interface IIngredientsBox {
   el: TIngredient;
@@ -16,7 +16,7 @@ interface IIngredientsBox {
 }
 
 const IngredientsBox: FC<IIngredientsBox> = ({ el, index, moveListItem }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'item',
@@ -28,23 +28,27 @@ const IngredientsBox: FC<IIngredientsBox> = ({ el, index, moveListItem }) => {
 
   const [, dropRef] = useDrop({
     accept: 'item',
-    hover: (item: { [index: string]: number }, monitor: any) => {
+    hover(item: { index: number }, monitor) {
+      if (!ref.current) return;
       const dragIndex = item.index;
       const hoverIndex = index;
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      if (dragIndex === hoverIndex) return;
+      const rec: HTMLElement = ref.current;
+      const hoverBoundingRect = rec?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return;
-      if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
       moveListItem(dragIndex, hoverIndex);
       item.index = hoverIndex;
     },
   });
 
-  const ref: any = useRef(null);
+  const ref = useRef<HTMLDivElement>();
 
-  const dragDropRef: any = dragRef(dropRef(ref));
+  const dragDropRef = dragRef(dropRef(ref)) as LegacyRef<HTMLDivElement>;
 
   const opacity = isDragging ? 0 : 1;
 

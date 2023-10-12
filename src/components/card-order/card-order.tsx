@@ -1,14 +1,13 @@
 import React, { useMemo, FC } from 'react';
-import { useAppSelector } from '../../hooks/hooks';
-import { TIngredient } from '../../utils/types';
 import styles from './card-order.module.css';
+import { TCardOrder } from '../../utils/types';
+import { useAppSelector } from '../../hooks/hooks';
 import { Link, useLocation } from 'react-router-dom';
+import { colorStatus } from '../../utils/functions';
 import {
   CurrencyIcon,
   FormattedDate,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { colorStatus } from '../../utils/functions';
-import { TCardOrder } from '../../utils/types';
 import { getIngredientsState } from '../../services/store/ingredientsSlice';
 
 interface ICardOrder {
@@ -22,7 +21,7 @@ const CardOrder: FC<ICardOrder> = ({ orderData, isStatus = false }) => {
   const location = useLocation();
 
   const orderIngredientDataAll = orderData?.ingredients.map((id) =>
-    ingredientsAll?.find((el: TIngredient) => el._id === id)
+    ingredientsAll?.find((el) => el._id === id)
   );
 
   const orderIngredientData = useMemo(
@@ -31,17 +30,17 @@ const CardOrder: FC<ICardOrder> = ({ orderData, isStatus = false }) => {
   );
 
   const bun = useMemo(
-    () => orderIngredientData?.find((el) => el.type === 'bun'),
+    () => orderIngredientData?.find((el) => el?.type === 'bun'),
     [orderIngredientData]
   );
 
   const saucesAndMains = useMemo(
-    () => orderIngredientData?.filter((el) => el.type !== 'bun'),
+    () => orderIngredientData?.filter((el) => el?.type !== 'bun'),
     [orderIngredientData]
   );
 
   const saucesAndMainsPrice = saucesAndMains?.reduce(
-    (acc, el) => acc + el.price,
+    (acc, el: any) => acc + el.price,
     0
   );
 
@@ -88,8 +87,8 @@ const CardOrder: FC<ICardOrder> = ({ orderData, isStatus = false }) => {
               >
                 <img
                   className={styles.image}
-                  src={el.image_mobile}
-                  alt={el.name}
+                  src={el?.image_mobile}
+                  alt={el?.name}
                 />
               </div>
             );

@@ -1,6 +1,5 @@
 import { useDrop } from 'react-dnd';
 import React, { useCallback, FC } from 'react';
-import { TIngredient } from '../../utils/types';
 import styles from './burger-constructor.module.css';
 import { CreateOrder } from './create-order/create-order';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -70,7 +69,7 @@ export const BurgerConstructor: FC = () => {
           )}
 
           <div className={`${styles.container} custom-scroll`}>
-            {saucesAndMains.map((el: TIngredient, index: number) => (
+            {saucesAndMains.map((el, index) => (
               <IngredientsBox
                 el={el}
                 key={el.nanoidId}

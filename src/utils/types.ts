@@ -1,4 +1,11 @@
 import { ReactNode } from 'react';
+import {
+  ActionCreatorWithPayload,
+  ActionCreatorWithoutPayload,
+} from '@reduxjs/toolkit';
+import { store } from '../services';
+
+export type AppDispatch = typeof store.dispatch;
 
 export type TIngredient = {
   _id: string;
@@ -32,19 +39,16 @@ export type TCardOrder = {
   updatedAt: string;
   number: number;
   owner?: string;
-  filter?: any;
-  map?: any;
-  toReversed?: any;
+  __v?: number;
 };
 
 export type TFeedNumbers = {
   success: boolean | string;
-  orders: TCardOrder | null;
+  orders: TCardOrder[];
   total: number;
   totalToday: number;
   status?: string;
   connectingError?: string;
-  length?: any;
 };
 
 export type TconstructorSlice = {
@@ -55,18 +59,22 @@ export type TconstructorSlice = {
 export type TingredientsSlice = {
   ingredients: TIngredient[];
   loading: boolean | null;
-  error: any;
+  error: null | unknown;
 };
 
 export type TOrder = {
-  orders: TCardOrder;
+  orders: TCardOrder | undefined;
+};
+
+export type TOrderDetails = {
+  order: TDetails;
 };
 
 export type TorderDetailsSlice = {
-  orderDetails: TOrder | {};
-  orderImageDetails: TOrder | [];
+  orderDetails: TOrderDetails | null;
+  orderImageDetails: TOrder | null;
   orderDetailsRequest: boolean | string;
-  orderDetailsFailed: boolean | string | unknown;
+  orderDetailsFailed: boolean | unknown;
 };
 
 export type TuserSlice = {
@@ -97,12 +105,39 @@ export type TCreateOrder = {
 };
 
 export type TonClose = {
-  onClose: () => void;
+  onClose?: () => void;
 };
 
 export type TUser = {
-  name?: string;
-  email?: string;
+  name?: string | null;
+  email?: string | null;
   password?: string;
   code?: string;
+};
+
+export type TDetails = {
+  createdAt: string;
+  ingredients: TIngredient;
+  name: string;
+  owner: {
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    email: string;
+  };
+  number: number;
+  price: number;
+  status: 'created' | 'done' | 'pending';
+  updatedAt: string;
+  _id: string;
+};
+
+export type TsocketMiddleware = {
+  wsConnect: ActionCreatorWithPayload<string>;
+  onOpen: ActionCreatorWithoutPayload;
+  onClose: ActionCreatorWithoutPayload;
+  onError: ActionCreatorWithPayload<string>;
+  onMessage: ActionCreatorWithPayload<TFeedNumbers>;
+  wsConnecting: ActionCreatorWithoutPayload;
+  wsDisconnect: ActionCreatorWithoutPayload;
 };

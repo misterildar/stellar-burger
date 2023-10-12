@@ -39,7 +39,7 @@ const ResetPassword: FC = () => {
       <PasswordInput
         placeholder={'Введите новый пароль'}
         onChange={handleChange}
-        value={values.password}
+        value={values.password ?? ''}
         name={'password'}
         extraClass='mb-2'
       />
@@ -47,7 +47,7 @@ const ResetPassword: FC = () => {
         type={'text'}
         placeholder={'Введите код из письма'}
         onChange={handleChange}
-        value={values.code}
+        value={values.code ?? ''}
         name={'code'}
         error={false}
         errorText={'Ошибка'}

@@ -4,11 +4,10 @@ import styles from './page-style.module.css';
 import Loader from '../components/loader/loader';
 import { Modal } from '../components/modal/modal';
 import { WS_ORDERS_URL } from '../utils/constants';
-import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import CardOrder from '../components/card-order/card-order';
+import { useAppDispatch, useAppSelector } from '../hooks/hooks';
 import FeedNumbers from '../components/feed-numbers/feed-numbers';
 import { connect, disconnect } from '../services/store/wsOrdersSlice';
-import { TCardOrder } from '../utils/types';
 
 const Feed: FC = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +15,7 @@ const Feed: FC = () => {
   useEffect(() => {
     dispatch(connect(WS_ORDERS_URL));
     return () => {
-      dispatch(disconnect('ORDERS_DISCONNECT'));
+      dispatch(disconnect());
     };
   }, [dispatch]);
 
@@ -30,7 +29,7 @@ const Feed: FC = () => {
 
       <div className={styles.feed_box}>
         <div className={`${styles.feed_card_box} custom-scroll`}>
-          {order?.orders?.map((el: TCardOrder) => (
+          {order?.orders?.map((el) => (
             <CardOrder orderData={el} key={el._id} />
           ))}
         </div>

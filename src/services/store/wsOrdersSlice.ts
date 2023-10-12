@@ -1,13 +1,14 @@
+import { TFeedNumbers } from '../../utils/types';
 import { TwsOrderSlice } from '../../utils/types';
 import { WebsocketStatus } from '../../utils/constants';
 import { createReducer, createAction } from '@reduxjs/toolkit';
 
 export const connect = createAction<string>('ORDERS_CONNECT');
-export const disconnect = createAction<string>('ORDERS_DISCONNECT');
-export const wsConnecting = createAction<string>('ORDERS_WS_CONNECTING');
-export const wsOpen = createAction<string>('ORDERS_WS_OPEN');
-export const wsClose = createAction<string>('ORDERS_WS_CLOSE');
-export const wsMessage = createAction<string>('ORDERS_WS_MESSAGE');
+export const disconnect = createAction('ORDERS_DISCONNECT');
+export const wsConnecting = createAction('ORDERS_WS_CONNECTING');
+export const wsOpen = createAction('ORDERS_WS_OPEN');
+export const wsClose = createAction('ORDERS_WS_CLOSE');
+export const wsMessage = createAction<TFeedNumbers>('ORDERS_WS_MESSAGE');
 export const wsError = createAction<string>('ORDERS_WS_ERROR');
 
 const initialState: TwsOrderSlice = {
@@ -32,7 +33,7 @@ export const wsOrderSlice = createReducer(initialState, (builder) => {
     .addCase(wsError, (state, action) => {
       state.connectingError = action.payload;
     })
-    .addCase(wsMessage, (state, action: any) => {
+    .addCase(wsMessage, (state, action) => {
       state.order = action.payload;
     });
 });
