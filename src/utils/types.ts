@@ -33,7 +33,7 @@ export type TAppHeaderItem = {
 export type TCardOrder = {
   _id: string;
   ingredients: string[];
-  status: 'created' | 'done' | 'pending';
+  status: 'created' | 'done' | 'pending' | string;
   name: string;
   createdAt: string;
   updatedAt: string;
@@ -63,7 +63,7 @@ export type TingredientsSlice = {
 };
 
 export type TOrder = {
-  orders: TCardOrder | undefined;
+  orders: TCardOrder;
 };
 
 export type TOrderDetails = {
@@ -72,7 +72,7 @@ export type TOrderDetails = {
 
 export type TorderDetailsSlice = {
   orderDetails: TOrderDetails | null;
-  orderImageDetails: TOrder | null;
+  orderImageDetails: TCardOrder | null;
   orderDetailsRequest: boolean | string;
   orderDetailsFailed: boolean | unknown;
 };

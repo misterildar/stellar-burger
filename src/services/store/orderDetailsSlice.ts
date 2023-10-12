@@ -70,14 +70,11 @@ const orderDetailsSlice = createSlice({
         state.orderDetailsFailed = action.payload;
       })
 
-      .addCase(
-        getOrderImageDetails.fulfilled,
-        (state, action: PayloadAction<TOrder>) => {
-          state.orderDetailsRequest = false;
-          state.orderDetailsFailed = false;
-          state.orderImageDetails = action.payload;
-        }
-      );
+      .addCase(getOrderImageDetails.fulfilled, (state, action) => {
+        state.orderDetailsRequest = false;
+        state.orderDetailsFailed = false;
+        state.orderImageDetails = action.payload?.orders[0];
+      });
   },
 });
 

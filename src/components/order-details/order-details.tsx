@@ -27,13 +27,13 @@ const OrderDetails: FC = () => {
 
   const ingredientsAll = useAppSelector(getIngredientsState);
 
-  const orderDataArr: any = useAppSelector(orderImageDetailsStore); //TODO Здесь any
+  const orderDataArr = useAppSelector(orderImageDetailsStore);
 
-  const orderData: TCardOrder = orderDataArr?.orders[0]; // потому что тут ругается на [0]
+  const orderData = orderDataArr as TCardOrder;
 
   const counter: { [count: string]: number } = {};
 
-  orderData?.ingredients.forEach((el) => {
+  orderData?.ingredients.forEach((el: any) => {
     if (!counter[el]) {
       counter[el] = 1;
     } else {
